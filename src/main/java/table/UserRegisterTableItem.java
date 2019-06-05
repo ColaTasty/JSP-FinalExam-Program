@@ -23,7 +23,7 @@ public class UserRegisterTableItem extends TableItem {
      */
     public boolean isVaildAccount(String account, String password) {
         try {
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE servlet.account=? AND password=?";
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE account=? AND password=?";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.preparedStatement.setString(1, account);
             this.preparedStatement.setString(2, password);
@@ -42,15 +42,16 @@ public class UserRegisterTableItem extends TableItem {
     public boolean register(AccountBean accountBean) {
         try {
             long nowTime = System.currentTimeMillis() / 1000;
-            this.sql = "INSERT INTO " + this.getTableName() + "(servlet.account,password,email,mobile,register_time,alter_time) VALUES(?,?,?,?,?,?)";
+            this.sql = "INSERT INTO " + this.getTableName() + "(account,user_name,password,email,mobile,register_time,alter_time) VALUES(?,?,?,?,?,?,?)";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.preparedStatement.setString(1, accountBean.getAccount());
-            this.preparedStatement.setString(2, accountBean.getPassword());
-            this.preparedStatement.setString(3, accountBean.getEmail());
-            this.preparedStatement.setString(4, accountBean.getMobile());
-            this.preparedStatement.setLong(5, accountBean.getRegisterTime());
-            this.preparedStatement.setLong(6, nowTime);
-            return this.preparedStatement.execute();
+            this.preparedStatement.setString(2, accountBean.getUser_name());
+            this.preparedStatement.setString(3, accountBean.getPassword());
+            this.preparedStatement.setString(4, accountBean.getEmail());
+            this.preparedStatement.setString(5, accountBean.getMobile());
+            this.preparedStatement.setLong(6, accountBean.getRegisterTime());
+            this.preparedStatement.setLong(7, nowTime);
+            return this.preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -63,7 +64,7 @@ public class UserRegisterTableItem extends TableItem {
      */
     public boolean isExistAccount(String account) {
         try {
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE servlet.account=?";
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE account=?";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.preparedStatement.setString(1, account);
             this.resultSet = this.preparedStatement.executeQuery();
@@ -75,7 +76,6 @@ public class UserRegisterTableItem extends TableItem {
     }
 
     /**
-     *
      * @param email String
      * @return boolean
      */
@@ -93,11 +93,10 @@ public class UserRegisterTableItem extends TableItem {
     }
 
     /**
-     *
      * @param mobile String
      * @return boolean
      */
-    public boolean isExistMobile(String mobile){
+    public boolean isExistMobile(String mobile) {
         try {
             this.sql = "SELECT * FROM " + this.getTableName() + " WHERE mobile=?";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
@@ -111,22 +110,21 @@ public class UserRegisterTableItem extends TableItem {
     }
 
     /**
-     *
      * @param account String
      * @param oldPass String
      * @param newPass String
      * @return boolean
      */
-    public boolean changePassword(String account,String oldPass,String newPass){
+    public boolean changePassword(String account, String oldPass, String newPass) {
         try {
-            this.sql = "UPDATE "+this.getTableName()+" SET password=? WHERE servlet.account=? AND password=?";
+            this.sql = "UPDATE " + this.getTableName() + " SET password=? WHERE account=? AND password=?";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
-            this.preparedStatement.setString(1,newPass);
-            this.preparedStatement.setString(2,account);
-            this.preparedStatement.setString(3,oldPass);
+            this.preparedStatement.setString(1, newPass);
+            this.preparedStatement.setString(2, account);
+            this.preparedStatement.setString(3, oldPass);
             int row = this.preparedStatement.executeUpdate();
             if (row <= 0)
-                throw new SQLException("Error SQL Execution, SQL="+this.sql);
+                throw new SQLException("Error SQL Execution, SQL=" + this.sql);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -134,16 +132,26 @@ public class UserRegisterTableItem extends TableItem {
         }
     }
 
-    public void close(){
+    /**
+     * 杨子豪
+     * @param uid int
+     * @return String|null
+     */
+    public String getUserName(int uid) {
         try {
-            if (this.resultSet != null)
-                this.resultSet.close();
-            if (this.preparedStatement != null)
-                this.preparedStatement.close();
-            if (this.statement != null)
-                this.statement.close();
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE user_id=?";
+            this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
+            this.preparedStatement.setInt(1,uid);
+            this.resultSet = this.preparedStatement.executeQuery();
+            if (this.resultSet.next()){
+                String uname = this.resultSet.getString("user_name");
+                return uname;
+            }else {
+                throw new SQLException("未找到对应user_id");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }

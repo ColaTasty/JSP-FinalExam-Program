@@ -4,6 +4,7 @@ import global.config.DBConnecter;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -43,5 +44,18 @@ public abstract class TableItem {
 
     public DBConnecter getDbConnecter() {
         return dbConnecter;
+    }
+
+    public void close() {
+        try {
+            if (this.resultSet != null)
+                this.resultSet.close();
+            if (this.preparedStatement != null)
+                this.preparedStatement.close();
+            if (this.statement != null)
+                this.statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

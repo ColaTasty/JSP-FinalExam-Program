@@ -5,6 +5,7 @@ package bean;
  */
 public class AccountBean {
     private String account;
+    private String user_name;
     private String password;
     private String email = null;
     private String mobile = null;
@@ -16,6 +17,14 @@ public class AccountBean {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String getPassword() {
