@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
+<%@include file="jsp_header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +32,6 @@
                     </h4>
                 </a>
                 <!-- 帖子列表 -->
-
 
 
             </div>

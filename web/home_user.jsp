@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
+<%@ include file="jsp_header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,16 +45,16 @@
                             </a>
                         </li>
                         <li><a href="#post" data-toggle="tab">我的帖子</a></li>
-<!--                        <li class="dropdown">-->
-<!--                            <a href="#" id="myTabDrop1" class="dropdown-toggle"-->
-<!--                               data-toggle="dropdown">Java-->
-<!--                                <b class="caret"></b>-->
-<!--                            </a>-->
-<!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">-->
-<!--                                <li><a href="#jmeter" tabindex="-1" data-toggle="tab">jmeter</a></li>-->
-<!--                                <li><a href="#ejb" tabindex="-1" data-toggle="tab">ejb</a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                        <!--                        <li class="dropdown">-->
+                        <!--                            <a href="#" id="myTabDrop1" class="dropdown-toggle"-->
+                        <!--                               data-toggle="dropdown">Java-->
+                        <!--                                <b class="caret"></b>-->
+                        <!--                            </a>-->
+                        <!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">-->
+                        <!--                                <li><a href="#jmeter" tabindex="-1" data-toggle="tab">jmeter</a></li>-->
+                        <!--                                <li><a href="#ejb" tabindex="-1" data-toggle="tab">ejb</a></li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
                     </ul>
                 </div>
                 <div id="myTabContent" class="tab-content">
@@ -63,41 +64,72 @@
                         <div class="container">
                             <div class="row clearfix">
                                 <div class="col-md-8 column">
-                                    <form class="form-horizontal" role="form">
+                                    <form class="form-horizontal" action="/change-infor" role="form">
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">账号</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="username" readonly="readonly" value="123456"/>
+                                                <input type="text" class="form-control" id="username"
+                                                       readonly="readonly"
+                                                       value="<jsp:getProperty name="userBean" property="account"/>"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">昵称</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="nickname" value="mike"/>
+                                                <input type="text" class="form-control" id="nickname"
+                                                       value="<jsp:getProperty name="userBean" property="user_name"/>"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="email" value="8412@qq.com"/>
+                                                <%
+                                                    if (userBean.getEmail() == null || userBean.getEmail().length() <= 0) {
+                                                        out.print("<input type=\"email\" class=\"form-control\" id=\"email\" value=\"\" placeholder=\"你还没有填写邮箱\"/>");
+                                                    } else {
+                                                        out.print("<input type=\"email\" class=\"form-control\" id=\"email\" value=\"" + userBean.getEmail() + "\" placeholder=\"你还没有填写邮箱\"/>");
+                                                    }
+                                                %>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-2 control-label">手机号</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="phone" value="123456"/>
+                                                <%
+                                                    if (userBean.getMobile() == null || userBean.getMobile().length() <= 0) {
+                                                        out.print("<input type=\"text\" class=\"form-control\" id=\"phone\" placeholder=\"你还没有填写手机号\"/>");
+                                                    } else {
+                                                        out.print("<input type=\"text\" class=\"form-control\" id=\"phone\" value=\"" + userBean.getMobile() + "\" placeholder=\"你还没有写手机号\"/>");
+                                                    }
+                                                %>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="gender" value="男"/>
+                                                <input type="text" class="form-control" id="gender"
+                                                       value="<%= userBean.getGender()==1?"男":"女"%>"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-2 control-label">状态</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="status" value="正常"/>
+                                                <%
+                                                    switch (userBean.getStatus()) {
+                                                        case 0:
+                                                            out.print("<input type=\"text\" class=\"form-control\" id=\"status\" value=\"拉黑\"/>");
+                                                            break;
+                                                        case 1:
+                                                            out.print("<input type=\"text\" class=\"form-control\" id=\"status\" value=\"正常\"/>");
+                                                            break;
+                                                        case 2:
+                                                            out.print("<input type=\"text\" class=\"form-control\" id=\"status\" value=\"封禁\"/>");
+                                                            break;
+                                                        default:
+                                                            out.print("<script>alert(\"登录异常，返回登录\");windows.location.href=\"/index.jsp\"</script>");
+                                                            break;
+                                                    }
+                                                %>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -108,7 +140,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-4 column">
-                                    <img alt="140x140" src="src/img/user.ico" class="img-rounded" />
+                                    <img alt="140x140" src="src/img/user.ico" class="img-rounded"/>
                                 </div>
                             </div>
                         </div>

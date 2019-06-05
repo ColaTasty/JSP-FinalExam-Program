@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
+<%@include file="jsp_header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,7 +145,7 @@
                     <hr>
                 </div>
             </div>
-                <textarea class="form-control" rows="3" name="text" placeholder="内容:今晚吃什么"></textarea>
+            <textarea class="form-control" rows="3" name="text" placeholder="内容:今晚吃什么"></textarea>
             <br>
             选择图片：
             <div class="div_save">
@@ -158,7 +159,9 @@
             <!-- 退出 -->
             <div class="row div_little_func">
                 <div class="col-xs-12" style="text-align: center">
-                    <button class="btn btn-default btn-cricle btn_stay" data-toggle="modal" data-target="#loginModal">Exit</button>
+                    <button class="btn btn-default btn-cricle btn_stay" data-toggle="modal" data-target="#loginModal">
+                        Exit
+                    </button>
                 </div>
             </div>
         </div>

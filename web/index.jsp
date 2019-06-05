@@ -35,7 +35,7 @@
 
     <!-- 注册 -->
     <div id="signUp-page" style="display: none">
-        <form class="form-horizontal" id="signUp-form" role="form">
+        <form class="form-horizontal" action="user-login" method="post" id="signUp-form" role="form">
             <div class="form-group">
                 <div class="col-xs-10 col-sm-8 col-md-4 col-lg-2 col-xs-offset-1 col-sm-offset-2 col-md-offset-4 col-lg-offset-5">
                     <input type="text" name="account" id="register-account" class="form-control input-lg" required
@@ -88,7 +88,7 @@
 
     <!-- 登陆 -->
     <div id="signIn-page">
-        <form class="form-horizontal" id="signIn-form" role="form">
+        <form class="form-horizontal" action="user-login" method="post" id="signIn-form" role="form">
             <div class="form-group">
                 <div class="col-xs-10 col-sm-8 col-md-4 col-lg-2 col-xs-offset-1 col-sm-offset-2 col-md-offset-4 col-lg-offset-5">
                     <input type="text" name="account" id="login-account" class="form-control input-lg" required
@@ -173,7 +173,7 @@
                                 return;
                             }
                             alert("注册成功！");
-                            window.location.href = "xxx";
+                            $("#signUp-form").submit();
                         }
                     });
                 }
@@ -201,7 +201,7 @@
                             return;
                         }
                         alert("欢迎回来");
-                        window.location.href = "xxx";
+                        $("#signIn-form").submit();
                     }
                 });
             }

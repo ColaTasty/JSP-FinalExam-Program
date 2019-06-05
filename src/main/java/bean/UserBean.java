@@ -10,7 +10,7 @@ package bean;
  * @author 黎江
  */
 public class UserBean {
-    private int user_id;
+    private int user_id = -1;
     private String user_name;
     private String account;
     private String email;
@@ -18,6 +18,24 @@ public class UserBean {
     private int gender;
     private long birthday;
     private int status;
+    private boolean admin = false;
+    private int admin_id = -1;
+
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     public int getStatus() {
         return status;

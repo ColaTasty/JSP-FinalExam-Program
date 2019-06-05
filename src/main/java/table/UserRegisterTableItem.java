@@ -2,6 +2,7 @@ package table;
 
 import abstracts.TableItem;
 import bean.AccountBean;
+import bean.UserBean;
 import global.config.DBConnecter;
 
 import java.sql.SQLException;
@@ -14,6 +15,36 @@ public class UserRegisterTableItem extends TableItem {
     public UserRegisterTableItem(DBConnecter dbConnecter) {
         super("user_register");
         this.dbConnecter = dbConnecter;
+    }
+
+    public UserBean getUserBean(String account,String password){
+        try {
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE account=? AND password=?";
+            this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+            this.preparedStatement.setString(1, account);
+            this.preparedStatement.setString(2, password);
+            this.resultSet = this.preparedStatement.executeQuery();
+            if (!this.resultSet.next())
+                throw new Exception("未找到用户");
+            UserBean userBean = new UserBean();
+            userBean.setAccount(this.resultSet.getString("account"));
+            userBean.setBirthday(this.resultSet.getLong("birthday"));
+            userBean.setEmail(this.resultSet.getString("email"));
+            userBean.setGender(this.resultSet.getInt("gender"));
+            userBean.setMobile(this.resultSet.getString("mobile"));
+            userBean.setStatus(this.resultSet.getInt("status"));
+            userBean.setUser_id(this.resultSet.getInt("user_id"));
+            userBean.setUser_name(this.resultSet.getString("user_name"));
+            int admin_id = new AdminEnrollTableItem(DBConnecter.connecter).getAdminId(userBean.getUser_id());
+            if (admin_id > 0){
+                userBean.setAdmin(true);
+                userBean.setAdmin_id(admin_id);
+            }
+            return userBean;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
