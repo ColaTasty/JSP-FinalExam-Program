@@ -1,5 +1,6 @@
 out
 target
-*.iws
 datingSite.iws
 *.iws
+*.iml
+*.ipr
