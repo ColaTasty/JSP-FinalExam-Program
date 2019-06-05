@@ -17,6 +17,15 @@ public class UserBean {
     private String mobile;
     private int gender;
     private long birthday;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getUser_id() {
         return user_id;

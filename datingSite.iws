@@ -8,6 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="271757ed-4bee-4e28-b16f-010f02afd2b8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/datingSite.iws" beforeDir="false" afterPath="$PROJECT_DIR$/datingSite.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bean/UserBean.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/header.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/home_friends.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/home_friends.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/home_ground.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/home_ground.jsp" afterDir="false" />
@@ -68,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/home_ground.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="56">
-              <caret line="2" column="16" lean-forward="true" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+            <state>
+              <caret column="69" selection-start-column="69" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -116,11 +117,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bean/UserBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1120">
-              <caret line="70" column="5" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
+            <state relative-caret-position="224">
+              <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+              <folding>
+                <element signature="e#416#417#0" expanded="true" />
+                <element signature="e#457#458#0" expanded="true" />
+                <element signature="e#493#494#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,6 +159,7 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -177,7 +184,6 @@
         <option value="$PROJECT_DIR$/web/home_ground.html" />
         <option value="$PROJECT_DIR$/web/home_user.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/main/java/bean/UserBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/abstracts/TableItem.java" />
         <option value="$PROJECT_DIR$/src/main/java/bean/AccountBean.java" />
         <option value="$PROJECT_DIR$/web/index.html" />
@@ -188,6 +194,7 @@
         <option value="$PROJECT_DIR$/web/home_friends.jsp" />
         <option value="$PROJECT_DIR$/web/home_ground.jsp" />
         <option value="$PROJECT_DIR$/web/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/bean/UserBean.java" />
       </list>
     </option>
   </component>
@@ -201,7 +208,7 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="975" />
     <option name="y" value="190" />
     <option name="width" value="1135" />
@@ -225,6 +232,32 @@
             <path>
               <item name="datingSite" type="b2602c69:ProjectViewProjectNode" />
               <item name="JSP-FinalExam-Program" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datingSite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JSP-FinalExam-Program" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datingSite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JSP-FinalExam-Program" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datingSite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JSP-FinalExam-Program" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="datingSite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JSP-FinalExam-Program" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -239,11 +272,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-2.0.1/resources/app/git/cmd/git.exe" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -355,12 +390,12 @@
       <workItem from="1559716074832" duration="357000" />
       <workItem from="1559717550045" duration="2254000" />
       <workItem from="1559720339460" duration="7291000" />
-      <workItem from="1559743323834" duration="542000" />
+      <workItem from="1559743323834" duration="1088000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22397000" />
+    <option name="totallyTimeSpent" value="22943000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -527,13 +562,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bean/UserBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1120">
-          <caret line="70" column="5" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/abstracts/TableItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="812">
@@ -571,8 +599,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/home_ground.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="2" column="16" lean-forward="true" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        <state>
+          <caret column="69" selection-start-column="69" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bean/UserBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+          <folding>
+            <element signature="e#416#417#0" expanded="true" />
+            <element signature="e#457#458#0" expanded="true" />
+            <element signature="e#493#494#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
