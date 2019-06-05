@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
 <!--
         作者：吴迈星
         时间：2019/6/4
@@ -47,7 +48,7 @@
     <div class="row div_function">
         <div class="col-xs-4">
             <div class="panel panel-default" id="pFunc1">
-                <a href="home_ground.html" style="text-decoration: none;color: black;">
+                <a href="home_ground.jsp" style="text-decoration: none;color: black;">
                     <div class="panel-body">
                         <strong>广场</strong>
                         <img class="iv_function" src="src/img/ground.svg" alt="home">
@@ -58,7 +59,7 @@
         </div>
         <div class="col-xs-4">
             <div class="panel panel-default" id="pFunc2">
-                <a href="home_friends.html" style="text-decoration: none;color: black;">
+                <a href="home_friends.jsp" style="text-decoration: none;color: black;">
                     <div class="panel-body">
                         <strong>交友</strong>
                         <img class="iv_function" src="src/img/community.svg" alt="">
@@ -68,7 +69,7 @@
         </div>
         <div class="col-xs-4">
             <div class="panel panel-default" id="pFunc3">
-                <a href="home_user.html" style="text-decoration: none;color: black;">
+                <a href="home_user.jsp" style="text-decoration: none;color: black;">
                     <div class="panel-body">
                         <strong>个人信息</strong>
                         <img class="iv_function" src="src/img/about.svg" alt="">

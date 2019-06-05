@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
     <script src="src/libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script>
         $(function () {
-            $(".header").load("header.html");
+            $(".header").load("header.jsp");
         });
     </script>
 </head>
