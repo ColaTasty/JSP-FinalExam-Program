@@ -10,6 +10,7 @@
 <%
     out.print("<!-- use jsp_header -->");
     if (userBean.getAccount() == null) {
-        response.sendRedirect("/");
+        out.print("<script>alert(\"访问失效，请登录\");window.location.href=\"/\";</script>");
+//        response.sendRedirect("/");
     }
 %>
