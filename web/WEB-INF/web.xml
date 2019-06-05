@@ -3,18 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>servlet.account.RegisterServlet</servlet-class>
-    </servlet>
+    <!--  LoginServlet  -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlet.account.LoginServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <!--  RegisterServlet  -->
     <servlet>
-        <servlet-name>HabitServlet</servlet-name>
-        <servlet-class>servlet.user.HabitServlet</servlet-class>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>servlet.account.RegisterServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <!--  UserLoginServlet  -->
     <servlet>
         <servlet-name>UserLoginServlet</servlet-name>
         <servlet-class>servlet.user.UserLoginServlet</servlet-class>
@@ -22,17 +29,5 @@
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/user-login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>HabitServlet</servlet-name>
-        <url-pattern>/habit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 </web-app>
