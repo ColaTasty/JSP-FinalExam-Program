@@ -75,4 +75,13 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <!--  AlterInformationServlet  -->
+    <servlet>
+        <servlet-name>AlterInformationServlet</servlet-name>
+        <servlet-class>servlet.user.AlterInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AlterInformationServlet</servlet-name>
+        <url-pattern>/alter-information</url-pattern>
+    </servlet-mapping>
 </web-app>

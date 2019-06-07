@@ -25,7 +25,7 @@ public class UserLoginServlet extends HttpServlet {
         String account = request.getParameter("account");
         String password = request.getParameter("password");
         if (account.length() <= 0 || password.length() <= 0){
-            request.getRequestDispatcher("/").forward(request,response);
+            ResponseToClient.alertMsg("请输入正确的帐号和密码！",response);
             return;
         }
         UserBean userBean = userRegisterTableItem.getUserBean(account,password);
@@ -33,7 +33,7 @@ public class UserLoginServlet extends HttpServlet {
             request.getSession().setAttribute("userBean",userBean);
             request.getRequestDispatcher("/home_ground.jsp").forward(request,response);
         }else {
-            request.getRequestDispatcher("/").forward(request,response);
+            ResponseToClient.alertMsg("请输入正确的帐号和密码！",response);
         }
     }
 

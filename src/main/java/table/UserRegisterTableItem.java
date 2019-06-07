@@ -5,19 +5,67 @@ import bean.AccountBean;
 import bean.UserBean;
 import global.config.DBConnecter;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 /**
  * @author 黎江
  */
 public class UserRegisterTableItem extends TableItem {
 
+    public static List<String> integerColumn = new ArrayList<String>();
+
     public UserRegisterTableItem(DBConnecter dbConnecter) {
         super("user_register");
         this.dbConnecter = dbConnecter;
+        integerColumn.add("user_id");
+        integerColumn.add("gender");
+        integerColumn.add("birthday");
+        integerColumn.add("status");
+        integerColumn.add("register_time");
+        integerColumn.add("alter_time");
     }
 
-    public UserBean getUserBean(String account,String password){
+    public static boolean isIntegerColumn(String column_key){
+        return integerColumn.contains(column_key);
+    }
+
+    public static UserBean refreshUserBean(int user_id){
+        try {
+            String sql = "SELECT * FROM user_register WHERE user_id=?";
+            PreparedStatement preparedStatement = DBConnecter.connecter.getPreparedStatement(sql);
+            preparedStatement.setInt(1, user_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next())
+                throw new Exception("未找到用户");
+            UserBean userBean = new UserBean();
+            userBean.setAccount(resultSet.getString("account"));
+            userBean.setBirthday(resultSet.getLong("birthday"));
+            userBean.setEmail(resultSet.getString("email"));
+            userBean.setGender(resultSet.getInt("gender"));
+            userBean.setMobile(resultSet.getString("mobile"));
+            userBean.setStatus(resultSet.getInt("status"));
+            userBean.setUser_id(resultSet.getInt("user_id"));
+            userBean.setUser_name(resultSet.getString("user_name"));
+            int admin_id = new AdminEnrollTableItem(DBConnecter.connecter).getAdminId(userBean.getUser_id());
+            if (admin_id > 0) {
+                userBean.setAdmin(true);
+                userBean.setAdmin_id(admin_id);
+            }
+            return userBean;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public UserBean getUserBean(int user_id){
+        return refreshUserBean(user_id);
+    }
+
+    public UserBean getUserBean(String account, String password) {
         try {
             this.sql = "SELECT * FROM " + this.getTableName() + " WHERE account=? AND password=?";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
@@ -36,7 +84,7 @@ public class UserRegisterTableItem extends TableItem {
             userBean.setUser_id(this.resultSet.getInt("user_id"));
             userBean.setUser_name(this.resultSet.getString("user_name"));
             int admin_id = new AdminEnrollTableItem(DBConnecter.connecter).getAdminId(userBean.getUser_id());
-            if (admin_id > 0){
+            if (admin_id > 0) {
                 userBean.setAdmin(true);
                 userBean.setAdmin_id(admin_id);
             }
@@ -164,7 +212,43 @@ public class UserRegisterTableItem extends TableItem {
     }
 
     /**
+     *
+     * @param user_id int
+     * @param keys HashMap<>
+     * @return boolean
+     */
+    public boolean alterInformation(int user_id, HashMap<String, String> keys) {
+        try {
+            this.sql = "UPDATE " + this.getTableName() + " SET ";
+            for (Map.Entry<String, String> item :
+                    keys.entrySet()) {
+                this.sql = this.sql  + item.getKey() + "=?,";
+            }
+            this.sql += "alter_time=?";
+            this.sql += " WHERE user_id=?";
+            System.out.println("修改用户信息SQL = " + this.sql);
+            this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
+            int paramer_idx = 1;
+            for (Map.Entry<String, String> item :
+                    keys.entrySet()) {
+                if (isIntegerColumn(item.getKey()))
+                    this.preparedStatement.setInt(paramer_idx,Integer.parseInt(item.getValue()));
+                else
+                    this.preparedStatement.setString(paramer_idx,item.getValue());
+                paramer_idx++;
+            }
+            this.preparedStatement.setLong(paramer_idx,System.currentTimeMillis()/1000);
+            this.preparedStatement.setInt(paramer_idx+1,user_id);
+            return this.preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * 杨子豪
+     *
      * @param uid int
      * @return String|null
      */
@@ -172,12 +256,11 @@ public class UserRegisterTableItem extends TableItem {
         try {
             this.sql = "SELECT * FROM " + this.getTableName() + " WHERE user_id=?";
             this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
-            this.preparedStatement.setInt(1,uid);
+            this.preparedStatement.setInt(1, uid);
             this.resultSet = this.preparedStatement.executeQuery();
-            if (this.resultSet.next()){
-                String uname = this.resultSet.getString("user_name");
-                return uname;
-            }else {
+            if (this.resultSet.next()) {
+                return this.resultSet.getString("user_name");
+            } else {
                 throw new SQLException("未找到对应user_id");
             }
         } catch (SQLException e) {
