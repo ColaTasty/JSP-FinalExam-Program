@@ -1,4 +1,10 @@
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
+<jsp:useBean id="userBean" class="bean.UserBean" scope="session"/>
+<%
+    // 验证是否已登录过
+    if (userBean.getAccount() != null)
+        request.getRequestDispatcher("/home_ground.jsp").forward(request,response);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

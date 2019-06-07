@@ -6,5 +6,7 @@ datingSite.iml
 datingSite.ipr
 =======
 *.iws
+*.ipr
+JSP-FinalExam-Program.iml
 DBConfig.java
 >>>>>>> parent of 85ba282... 增加登录失效
