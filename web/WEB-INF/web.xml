@@ -66,4 +66,13 @@
         <servlet-name>ShowResponsesServlet</servlet-name>
         <url-pattern>/show-responses</url-pattern>
     </servlet-mapping>
+    <!--  account.LogoutServlet  -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>servlet.account.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -21,7 +21,6 @@ import java.io.IOException;
  */
 public class UserLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ResponseToClient responseToClient = new ResponseToClient();
         UserRegisterTableItem userRegisterTableItem = new UserRegisterTableItem(DBConnecter.connecter);
         String account = request.getParameter("account");
         String password = request.getParameter("password");
@@ -32,7 +31,7 @@ public class UserLoginServlet extends HttpServlet {
         UserBean userBean = userRegisterTableItem.getUserBean(account,password);
         if (userBean != null){
             request.getSession().setAttribute("userBean",userBean);
-            request.getRequestDispatcher("/home_friends.jsp").forward(request,response);
+            request.getRequestDispatcher("/home_ground.jsp").forward(request,response);
         }else {
             request.getRequestDispatcher("/").forward(request,response);
         }
