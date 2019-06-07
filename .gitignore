@@ -1,9 +1,4 @@
 out
 target
-datingSite.iws
-datingSite.iml
-datingSite.ipr
-*.iws
-.\datingSite.iws
-.\JSP-FinalExam-Program.iml
+.idea
 DBConfig.java
