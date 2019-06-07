@@ -21,29 +21,24 @@ import java.io.IOException;
  */
 public class UserLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResponseToClient responseToClient = new ResponseToClient();
         UserRegisterTableItem userRegisterTableItem = new UserRegisterTableItem(DBConnecter.connecter);
         String account = request.getParameter("account");
         String password = request.getParameter("password");
-        System.out.println("user-login : ");
-        System.out.println(account);
-        System.out.println(password);
         if (account.length() <= 0 || password.length() <= 0){
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
+            request.getRequestDispatcher("/").forward(request,response);
             return;
         }
         UserBean userBean = userRegisterTableItem.getUserBean(account,password);
         if (userBean != null){
             request.getSession().setAttribute("userBean",userBean);
             request.getRequestDispatcher("/home_friends.jsp").forward(request,response);
-            return;
         }else {
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
-            return;
+            request.getRequestDispatcher("/").forward(request,response);
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResponseToClient.doNotSupportGet(response);
     }
 }

@@ -52,4 +52,32 @@ public class ResponseToClient extends TransJson {
     public void setMsg(String msg) {
         this.setJsonValue("msg", msg);
     }
+
+    public static void doNotSupportGet(HttpServletResponse response) {
+        try {
+            response.setHeader("content-type", "text/html;charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<style>");
+            out.println("a:link,a:visited,a:active{color:black;text-decoration:none}");
+            out.println("a:hover{color:#576b95;text-decoration:none}");
+            out.println("</style>");
+            out.println("<title>");
+            out.println("请正确的访问此页面");
+            out.println("</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1 style=\"text-align:center;\">");
+            out.println("请正确访问该网页");
+            out.println("</h1>");
+            out.println("<h1 style=\"text-align:center;\">");
+            out.println("<a href=\"/\">点我返回登录</a>");
+            out.println("</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
