@@ -32,50 +32,8 @@
                     </h4>
                 </a>
                 <!-- 帖子列表 -->
-                <!-- start -->
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
-                        <img alt="100%x180" src="/src/img/ic_p8.jpg" style="height: 180px; width: 100%; display: block;">
-                    </a>
-                    <div class="caption">
-                        <h3>B哥</h3>
-                        <p>城院第一帅</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">
-                                详细资料
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
-                        <img alt="100%x180" src="/src/img/ic_p8.jpg" style="height: 180px; width: 100%; display: block;">
-                    </a>
-                    <div class="caption">
-                        <h3>B哥</h3>
-                        <p>城院第一帅</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">
-                                详细资料
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
-                        <img alt="100%x180" src="/src/img/ic_p8.jpg" style="height: 180px; width: 100%; display: block;">
-                    </a>
-                    <div class="caption">
-                        <h3>B哥</h3>
-                        <p>城院第一帅</p>
-                        <p>
-                            <a href="#" class="btn btn-primary" role="button">
-                                详细资料
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                <!-- End -->
+
+
             </div>
         </div>
     </div>
