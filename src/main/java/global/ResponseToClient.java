@@ -72,7 +72,7 @@ public class ResponseToClient extends TransJson {
             out.println("请正确访问该网页");
             out.println("</h1>");
             out.println("<h1 style=\"text-align:center;\">");
-            out.println("<a href=\"/\">点我返回登录</a>");
+            out.println("<a href=\"/\">点我返回</a>");
             out.println("</h1>");
             out.println("</body>");
             out.println("</html>");
