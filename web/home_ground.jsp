@@ -47,11 +47,13 @@
                             <p class="list-group-item-text div_article">
                                 2019/06/05
                             </p>
-                            <a href="#" style="float: right">点击联系我</a>
+                            <a href="#">收藏</a>
+                            &nbsp;
+                            <a href="#">点击联系我</a>
                         </div>
                         <!-- 右侧图片，信息 -->
                         <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="src/img/user.ico" alt="">
+                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
                         </div>
                     </div>
                 </div>
@@ -64,11 +66,13 @@
                             <p class="list-group-item-text div_article">
                                 2019/06/05
                             </p>
-                            <a href="#" style="float: right">点击联系我</a>
+                            <a href="#">收藏</a>
+                            &nbsp;
+                            <a href="#">点击联系我</a>
                         </div>
                         <!-- 右侧图片，信息 -->
                         <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="src/img/user.ico" alt="">
+                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
                         </div>
                     </div>
                 </div>
@@ -81,11 +85,13 @@
                             <p class="list-group-item-text div_article">
                                 2019/06/05
                             </p>
-                            <a href="#" style="float: right">点击联系我</a>
+                            <a href="#">收藏</a>
+                            &nbsp;
+                            <a href="#">点击联系我</a>
                         </div>
                         <!-- 右侧图片，信息 -->
                         <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="src/img/user.ico" alt="">
+                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
                         </div>
                     </div>
                 </div>
@@ -98,11 +104,13 @@
                             <p class="list-group-item-text div_article">
                                 2019/06/05
                             </p>
-                            <a href="#" style="float: right">点击联系我</a>
+                            <a href="#">收藏</a>
+                            &nbsp;
+                            <a href="#">点击联系我</a>
                         </div>
                         <!-- 右侧图片，信息 -->
                         <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="src/img/user.ico" alt="">
+                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
                         </div>
                     </div>
                 </div>
@@ -132,7 +140,7 @@
         <div class="col-xs-3 div_record">
             <!-- 用户信息 -->
             <div class="jumbotron div_userinfo">
-                <img class="iv_user_head img-circle" src="src/img/user.ico">
+                <img class="iv_user_head img-circle" src="/src/img/user.ico">
                 <div style="display: inline-block; margin-left: 12px;font-size: 18px;">用户名</div>
             </div>
             <!-- 随手记录 -->

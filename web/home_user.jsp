@@ -44,17 +44,16 @@
                                 个人信息
                             </a>
                         </li>
-                        <li><a href="#post" data-toggle="tab">我的帖子</a></li>
-                        <!--                        <li class="dropdown">-->
-                        <!--                            <a href="#" id="myTabDrop1" class="dropdown-toggle"-->
-                        <!--                               data-toggle="dropdown">Java-->
-                        <!--                                <b class="caret"></b>-->
-                        <!--                            </a>-->
-                        <!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">-->
-                        <!--                                <li><a href="#jmeter" tabindex="-1" data-toggle="tab">jmeter</a></li>-->
-                        <!--                                <li><a href="#ejb" tabindex="-1" data-toggle="tab">ejb</a></li>-->
-                        <!--                            </ul>-->
-                        <!--                        </li>-->
+                        <li>
+                            <a href="#post" data-toggle="tab">
+                                我的帖子
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#collection" data-toggle="tab">
+                                我的收藏
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div id="myTabContent" class="tab-content">
@@ -140,7 +139,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-4 column">
-                                    <img alt="140x140" src="src/img/user.ico" class="img-rounded"/>
+                                    <img alt="140x140" src="/src/img/user.ico" class="img-rounded"/>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +202,68 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end -->
+                    </div>
+                    <!-- end -->
+                    <!-- 我的收藏 -->
+                    <div id="collection" class="tab-pane fade">
+                        <!-- 内容 -->
+                        <div class="list-group-item item_article">
+                            <div class="row">
+                                <div class="div_center col-xs-9">
+                                    <p class="list-group-item-text div_article_content">
+                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
+                                    </p>
+                                    <p class="list-group-item-text div_article">
+                                        2019/06/05
+                                    </p>
+                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">
+                                        取消收藏
+                                    </button>
+                                </div>
+                                <!-- 右侧图片，信息 -->
+                                <div class="col-xs-3 div_right_info">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item item_article">
+                            <div class="row">
+                                <div class="div_center col-xs-9">
+                                    <p class="list-group-item-text div_article_content">
+                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
+                                    </p>
+                                    <p class="list-group-item-text div_article">
+                                        2019/06/05
+                                    </p>
+                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">
+                                        取消收藏
+                                    </button>
+                                </div>
+                                <!-- 右侧图片，信息 -->
+                                <div class="col-xs-3 div_right_info">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item item_article">
+                            <div class="row">
+                                <div class="div_center col-xs-9">
+                                    <p class="list-group-item-text div_article_content">
+                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
+                                    </p>
+                                    <p class="list-group-item-text div_article">
+                                        2019/06/05
+                                    </p>
+                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">
+                                        取消收藏
+                                    </button>
+                                </div>
+                                <!-- 右侧图片，信息 -->
+                                <div class="col-xs-3 div_right_info">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
