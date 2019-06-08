@@ -53,6 +53,29 @@ public class ResponseToClient extends TransJson {
         this.setJsonValue("msg", msg);
     }
 
+    public static void alertMsg(String msg, HttpServletResponse response) {
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"/>");
+            out.println("<script>");
+            out.println("\talert(\"" + msg + "\");");
+//            out.println("\twindow.location.href=\"/home_user.jsp\";");
+            out.println("\twindow.history.go(-1);");
+            out.println("</script>");
+            out.println("</head>");
+            out.println("</html>");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void illegalVisit(HttpServletResponse response) {
+        doNotSupportGet(response);
+    }
+
     public static void doNotSupportGet(HttpServletResponse response) {
         try {
             response.setHeader("content-type", "text/html;charset=utf-8");
@@ -64,12 +87,12 @@ public class ResponseToClient extends TransJson {
             out.println("a:hover{color:#576b95;text-decoration:none}");
             out.println("</style>");
             out.println("<title>");
-            out.println("请正确的访问此页面");
+            out.println("基乎");
             out.println("</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1 style=\"text-align:center;\">");
-            out.println("请正确访问该网页");
+            out.println("请正确的访问此页面");
             out.println("</h1>");
             out.println("<h1 style=\"text-align:center;\">");
             out.println("<a href=\"/\">点我返回</a>");

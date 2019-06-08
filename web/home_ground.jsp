@@ -167,9 +167,16 @@
             <!-- 退出 -->
             <div class="row div_little_func">
                 <div class="col-xs-12" style="text-align: center">
-                    <button class="btn btn-default btn-cricle btn_stay" data-toggle="modal" data-target="#loginModal">
+                    <button class="btn btn-default btn-cricle btn_stay" id="btn-logout" data-toggle="modal"
+                            data-target="#loginModal">
                         Exit
                     </button>
+                    <script>
+                        $("#btn-logout").click(function () {
+                            if (confirm("确定退出登录吗？"))
+                                window.location.href = "/logout";
+                        });
+                    </script>
                 </div>
             </div>
         </div>

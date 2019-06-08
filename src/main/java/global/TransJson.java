@@ -1,6 +1,7 @@
 package global;
 
 import com.alibaba.fastjson.*;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.lang.reflect.Array;
 
@@ -27,11 +28,23 @@ public class TransJson {
         json.put(key, value);
     }
 
-    public void setJsonValue(String key, Array value) {
+    public void setJsonValue(String key, JSONArray value) {
         json.put(key, value);
+    }
+
+    public JSONArray getJsonArrayValue(String key){
+        return json.getJSONArray(key);
+    }
+
+    public String getJsonValue(String key){
+        return json.getString(key);
     }
 
     public String getJsonString() {
         return JSON.toJSONString(this.json);
+    }
+
+    public String getJsonString(JSONObject json){
+        return JSON.toJSONString(json);
     }
 }

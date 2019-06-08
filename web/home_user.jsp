@@ -63,11 +63,12 @@
                         <div class="container">
                             <div class="row clearfix">
                                 <div class="col-md-8 column">
-                                    <form class="form-horizontal" action="/change-infor" role="form">
+                                    <form class="form-horizontal" id="alter-information" action="/alter-information"
+                                          method="post" role="form">
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">账号</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="username"
+                                                <input type="text" class="form-control" id="account" name="account"
                                                        readonly="readonly"
                                                        value="<jsp:getProperty name="userBean" property="account"/>"/>
                                             </div>
@@ -75,7 +76,7 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">昵称</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="nickname"
+                                                <input type="text" class="form-control" id="user_name" name="user_name"
                                                        value="<jsp:getProperty name="userBean" property="user_name"/>"/>
                                             </div>
                                         </div>
@@ -84,9 +85,9 @@
                                             <div class="col-sm-10">
                                                 <%
                                                     if (userBean.getEmail() == null || userBean.getEmail().length() <= 0) {
-                                                        out.print("<input type=\"email\" class=\"form-control\" id=\"email\" value=\"\" placeholder=\"你还没有填写邮箱\"/>");
+                                                        out.print("<input type=\"email\" class=\"form-control\" name=\"email\" id=\"email\" value=\"\" placeholder=\"你还没有填写邮箱\"/>");
                                                     } else {
-                                                        out.print("<input type=\"email\" class=\"form-control\" id=\"email\" value=\"" + userBean.getEmail() + "\" placeholder=\"你还没有填写邮箱\"/>");
+                                                        out.print("<input type=\"email\" class=\"form-control\" name=\"email\" id=\"email\" value=\"" + userBean.getEmail() + "\" placeholder=\"你还没有填写邮箱\"/>");
                                                     }
                                                 %>
                                             </div>
@@ -96,9 +97,9 @@
                                             <div class="col-sm-10">
                                                 <%
                                                     if (userBean.getMobile() == null || userBean.getMobile().length() <= 0) {
-                                                        out.print("<input type=\"text\" class=\"form-control\" id=\"phone\" placeholder=\"你还没有填写手机号\"/>");
+                                                        out.print("<input type=\"text\" class=\"form-control\" name=\"mobile\" id=\"mobile\" maxlength=\"11\" placeholder=\"你还没有填写手机号\"/>");
                                                     } else {
-                                                        out.print("<input type=\"text\" class=\"form-control\" id=\"phone\" value=\"" + userBean.getMobile() + "\" placeholder=\"你还没有写手机号\"/>");
+                                                        out.print("<input type=\"text\" class=\"form-control\" name=\"mobile\" id=\"mobile\" maxlength=\"11\" value=\"" + userBean.getMobile() + "\" placeholder=\"你还没有写手机号\"/>");
                                                     }
                                                 %>
                                             </div>
@@ -106,8 +107,16 @@
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="gender"
-                                                       value="<%= userBean.getGender()==1?"男":"女"%>"/>
+                                                <select class="form-control" id="gender" name="gender">
+                                                    <option value="1" <%=userBean.getGender() == 1 ? "selected=\"\"" : ""%>>
+                                                        男
+                                                    </option>
+                                                    <option value="0" <%=userBean.getGender() == 0 ? "selected=\"\"" : ""%>>
+                                                        女
+                                                    </option>
+                                                </select>
+                                                <%--                                                <input type="text" class="form-control" id="gender"--%>
+                                                <%--                                                       value="<%= userBean.getGender()==1?"男":"女"%>"/>--%>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -116,13 +125,13 @@
                                                 <%
                                                     switch (userBean.getStatus()) {
                                                         case 0:
-                                                            out.print("<input type=\"text\" class=\"form-control\" id=\"status\" value=\"拉黑\"/>");
+                                                            out.print("<input type=\"text\" class=\"form-control\" name=\"status\" id=\"status\" value=\"拉黑\" readonly=\"readonly\"/>");
                                                             break;
                                                         case 1:
-                                                            out.print("<input type=\"text\" class=\"form-control\" id=\"status\" value=\"正常\"/>");
+                                                            out.print("<input type=\"text\" class=\"form-control\" name=\"status\" id=\"status\" value=\"正常\" readonly=\"readonly\"/>");
                                                             break;
                                                         case 2:
-                                                            out.print("<input type=\"text\" class=\"form-control\" id=\"status\" value=\"封禁\"/>");
+                                                            out.print("<input type=\"text\" class=\"form-control\" name=\"status\" id=\"status\" value=\"封禁\" readonly=\"readonly\"/>");
                                                             break;
                                                         default:
                                                             out.print("<script>alert(\"登录异常，返回登录\");windows.location.href=\"/index.jsp\"</script>");
@@ -133,7 +142,8 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="submit" class="btn btn-default">修改</button>
+                                                <button id="btn-submit" type="button" class="btn btn-default">修改
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -277,6 +287,9 @@
             e.preventDefault();
             $(this).tab('show')
         });
+    });
+    $("#btn-submit").click(function () {
+        $("#alter-information").submit();
     });
 </script>
 </body>

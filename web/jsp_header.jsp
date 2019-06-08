@@ -1,4 +1,5 @@
-<%--
+<%@ page import="table.UserRegisterTableItem" %>
+<%@ page import="global.config.DBConnecter" %><%--
   Created by IntelliJ IDEA.
   User: Makia98 黎江
   Date: 2019/6/6
@@ -11,5 +12,6 @@
     out.print("<!-- use jsp_header -->");
     if (userBean.getAccount() == null) {
         response.sendRedirect("/");
-    }
+    } else
+        session.setAttribute("userBean", UserRegisterTableItem.refreshUserBean(userBean.getUser_id()));
 %>

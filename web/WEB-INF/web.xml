@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <!--  LoginServlet  -->
+    <!--  account.LoginServlet  -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>servlet.account.LoginServlet</servlet-class>
@@ -12,7 +12,7 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    <!--  RegisterServlet  -->
+    <!--  account.RegisterServlet  -->
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>servlet.account.RegisterServlet</servlet-class>
@@ -21,7 +21,7 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
-    <!--  UserLoginServlet  -->
+    <!--  account.UserLoginServlet  -->
     <servlet>
         <servlet-name>UserLoginServlet</servlet-name>
         <servlet-class>servlet.user.UserLoginServlet</servlet-class>
@@ -29,5 +29,59 @@
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/user-login</url-pattern>
+    </servlet-mapping>
+    <!--  InputResponsesServlet  -->
+    <servlet>
+        <servlet-name>InputResponsesServlet</servlet-name>
+        <servlet-class>servlet.square.InputResponsesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InputResponsesServlet</servlet-name>
+        <url-pattern>/input-response</url-pattern>
+    </servlet-mapping>
+    <!--  PublishInformationServlet  -->
+    <servlet>
+        <servlet-name>PublishInformationServlet</servlet-name>
+        <servlet-class>servlet.square.PublishInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PublishInformationServlet</servlet-name>
+        <url-pattern>/publish-information</url-pattern>
+    </servlet-mapping>
+    <!--  QuerySquareServlet  -->
+    <servlet>
+        <servlet-name>QuerySquareServlet</servlet-name>
+        <servlet-class>servlet.square.QuerySquareServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuerySquareServlet</servlet-name>
+        <url-pattern>/query-square</url-pattern>
+    </servlet-mapping>
+    <!--  ShowResponsesServlet  -->
+    <servlet>
+        <servlet-name>ShowResponsesServlet</servlet-name>
+        <servlet-class>servlet.square.ShowResponsesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowResponsesServlet</servlet-name>
+        <url-pattern>/show-responses</url-pattern>
+    </servlet-mapping>
+    <!--  account.LogoutServlet  -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>servlet.account.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <!--  AlterInformationServlet  -->
+    <servlet>
+        <servlet-name>AlterInformationServlet</servlet-name>
+        <servlet-class>servlet.user.AlterInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AlterInformationServlet</servlet-name>
+        <url-pattern>/alter-information</url-pattern>
     </servlet-mapping>
 </web-app>
