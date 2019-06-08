@@ -18,14 +18,15 @@ public class ShowResponsesServlet extends HttpServlet {
         response.setHeader("content-type", "application/json;charset=utf-8");
 		Post_ResponseTableItem  rptitem= new Post_ResponseTableItem(DBConnecter.connecter);			//实例化，调用操作post_Response表方法
         ResponseToClient responseToClient = new ResponseToClient();
-        if (rptitem.isQuery()){
-            responseToClient.responseToClient(true,"查询成功",response);
+		JSONArray array = null;
+        if (ptitem.isQuery()==null){
+            responseToClient.responseToClient(true,"查询失败",response);
             return;
         }
         else{
-             responseToClient.responseToClient(false," 查询失败",response);
+     		 array = JSONArray.fromObject(isQuery());
+     		 System.out.println(array);
              return;
-        }   
-
+        }  
     }
 }

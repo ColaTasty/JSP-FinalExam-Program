@@ -18,15 +18,27 @@ public class Post_ResponseTableItem  extends TableItem {
     /**
      * @return boolean|null
      */
-    public boolean isQuery() {
+    public String [][] isQuery() {
         try {
             this.sql = "SELECT * FROM " + this.getTableName();
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.resultSet = this.preparedStatement.executeQuery();
-            return this.resultSet.next();
+            
+            ResultSetMetaData metaData=rs.getMetaData();
+			int columnCount=metaData.getColumnCount();
+			int rowNumber=this.resultSet.getRow();
+			String [][]tableResult=new String[rowNumber][columnCount];
+			this.resultSet.beforeFirst();
+			int i=0;
+			while(this.resultSet.next()){
+				for(int k=0;k<columnCount;k++)
+					tableResult[i][k]=this.resultSet.getString(k+1);
+			i++;
+			}
+			return tableResult;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
