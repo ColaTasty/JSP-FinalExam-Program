@@ -148,8 +148,62 @@
                     <!-- 我的帖子 -->
                     <div id="post" class="tab-pane fade">
                         <!-- 内容 -->
-
-
+                        <!-- start -->
+                        <div class="list-group-item item_article">
+                            <div class="row">
+                                <div class="div_center col-xs-9">
+                                    <p class="list-group-item-text div_article_content">
+                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
+                                    </p>
+                                    <p class="list-group-item-text div_article">
+                                        2019/06/05
+                                    </p>
+                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">删除
+                                    </button>
+                                </div>
+                                <!-- 右侧图片，信息 -->
+                                <div class="col-xs-3 div_right_info">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item item_article">
+                            <div class="row">
+                                <div class="div_center col-xs-9">
+                                    <p class="list-group-item-text div_article_content">
+                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
+                                    </p>
+                                    <p class="list-group-item-text div_article">
+                                        2019/06/05
+                                    </p>
+                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">删除
+                                    </button>
+                                </div>
+                                <!-- 右侧图片，信息 -->
+                                <div class="col-xs-3 div_right_info">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item item_article">
+                            <div class="row">
+                                <div class="div_center col-xs-9">
+                                    <p class="list-group-item-text div_article_content">
+                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
+                                    </p>
+                                    <p class="list-group-item-text div_article">
+                                        2019/06/05
+                                    </p>
+                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">删除
+                                    </button>
+                                </div>
+                                <!-- 右侧图片，信息 -->
+                                <div class="col-xs-3 div_right_info">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
                     </div>
                 </div>
 
