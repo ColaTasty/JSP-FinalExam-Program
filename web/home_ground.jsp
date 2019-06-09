@@ -1,5 +1,12 @@
+<%@ page import="bean.PostBean" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="javafx.geometry.Pos" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.lang.reflect.Array" %>
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
 <%@include file="jsp_header.jsp" %>
+<jsp:useBean id="postListBean" class="bean.PostListBean" scope="request"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,82 +45,36 @@
                     </h4>
                 </a>
                 <!-- 帖子列表 -->
-                <div class="list-group-item item_article">
-                    <div class="row">
-                        <div class="div_center col-xs-9">
-                            <p class="list-group-item-text div_article_content">
-                                今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                            </p>
-                            <p class="list-group-item-text div_article">
-                                2019/06/05
-                            </p>
-                            <a href="#">收藏</a>
-                            &nbsp;
-                            <a href="#">点击联系我</a>
-                        </div>
-                        <!-- 右侧图片，信息 -->
-                        <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item item_article">
-                    <div class="row">
-                        <div class="div_center col-xs-9">
-                            <p class="list-group-item-text div_article_content">
-                                今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                            </p>
-                            <p class="list-group-item-text div_article">
-                                2019/06/05
-                            </p>
-                            <a href="#">收藏</a>
-                            &nbsp;
-                            <a href="#">点击联系我</a>
-                        </div>
-                        <!-- 右侧图片，信息 -->
-                        <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item item_article">
-                    <div class="row">
-                        <div class="div_center col-xs-9">
-                            <p class="list-group-item-text div_article_content">
-                                吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                            </p>
-                            <p class="list-group-item-text div_article">
-                                2019/06/05
-                            </p>
-                            <a href="#">收藏</a>
-                            &nbsp;
-                            <a href="#">点击联系我</a>
-                        </div>
-                        <!-- 右侧图片，信息 -->
-                        <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item item_article">
-                    <div class="row">
-                        <div class="div_center col-xs-9">
-                            <p class="list-group-item-text div_article_content">
-                                今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                            </p>
-                            <p class="list-group-item-text div_article">
-                                2019/06/05
-                            </p>
-                            <a href="#">收藏</a>
-                            &nbsp;
-                            <a href="#">点击联系我</a>
-                        </div>
-                        <!-- 右侧图片，信息 -->
-                        <div class="col-xs-3 div_right_info">
-                            <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                        </div>
-                    </div>
-                </div>
+                <%
+                    for(PostBean postBean:postListBean.getPosts()){
+                        String content =  postBean.getContent();
+                        int post_id = postBean.getPost_id();
+                        int user_id = postBean.getUser_id();
+                        long time = postBean.getTime();
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = new Date(time*1000);
+                        String str_time = simpleDateFormat.format(date);
+                        out.println("<div class=\"list-group-item item_article\">\n" +
+                                "                    <div class=\"row\">\n" +
+                                "                        <div class=\"div_center col-xs-9\">\n" +
+                                "                            <p class=\"list-group-item-text div_article_content\">\n" +
+                                content+"\n" +
+                                "                            </p>\n" +
+                                "                            <p class=\"list-group-item-text div_article\">\n" +
+                                str_time+"\n" +
+                                "                            </p>\n" +
+                                "                            <a href=\"#\">收藏</a>\n" +
+                                "                            &nbsp;\n" +
+                                "                            <a href=\"#\">点击联系我</a>\n" +
+                                "                        </div>\n" +
+                                "                        <!-- 右侧图片，信息 -->\n" +
+                                "                        <div class=\"col-xs-3 div_right_info\">\n" +
+                                "                            <img class=\"iv_article img-rounded\" src=\"/src/img/user.ico\" alt=\"\">\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                </div>");
+                    }
+                %>
             </div>
             <!-- 导航条 -->
             <nav aria-label="Page navigation" style="text-align: center">
@@ -123,11 +84,16 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    <%
+                        int page_index = 1;
+                        int tmp = postListBean.getPosts_total() % 10;
+                        System.out.println(postListBean.getPosts_total());
+                        int total_posts = postListBean.getPosts_total();
+                        int total_page = tmp > 0 ? ((total_posts - tmp)/10)+1:(total_posts - tmp)/10;
+                        while (page_index <= total_page){
+                            out.println("<li><a href=\"/query-square?page="+page_index+"\">"+(page_index++)+"</a></li>");
+                        }
+                    %>
                     <li>
                         <a href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>

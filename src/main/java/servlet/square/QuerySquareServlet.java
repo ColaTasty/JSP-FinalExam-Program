@@ -1,6 +1,7 @@
 package servlet.square;
 
 import bean.PostBean;
+import bean.PostListBean;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -26,9 +27,10 @@ public class QuerySquareServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("content-type","application/json;charset=utf-8");
         PostTableItem ptitem = new PostTableItem(DBConnecter.connecter);            //实例化，调用操作post表方法
         ResponseToClient responseToClient = new ResponseToClient();
-        JSONObject jsonObject = responseToClient.getJson();
+//        JSONObject jsonObject = responseToClient.getJson();
         int page = Integer.parseInt(request.getParameter("page"));
 //        没有页码，返回错误
         if (page <= 0){
@@ -37,13 +39,20 @@ public class QuerySquareServlet extends HttpServlet {
         }
         List<PostBean> posts = ptitem.isQuery(page);
 //        查询失败，返回错误
-        if (posts == null) {
-            responseToClient.responseToClient(false, "查询失败", response);
+        if (posts == null && PostTableItem.countPosts() > 0) {
+            ResponseToClient.illegalVisit(response);
             return;
         }
-        responseToClient.setResultStatus(true);
-        responseToClient.setJsonValue("msg", "查询成功！");
-        jsonObject.put("posts", JSON.toJSONString(posts));
-        responseToClient.responseToClient(response.getWriter());
+        PostListBean postListBean = new PostListBean();
+        postListBean.setPosts(posts);
+        postListBean.setPage(page);
+        postListBean.setPosts_total(PostTableItem.countPosts());
+        request.setAttribute("postListBean",postListBean);
+        request.getRequestDispatcher("/home_ground.jsp").forward(request,response);
+//        responseToClient.setResultStatus(true);
+//        responseToClient.setJsonValue("msg", "查询成功！");
+//        jsonObject.put("posts", JSON.toJSONString(posts));
+//        jsonObject.put("posts_total",PostTableItem.countPosts());
+//        responseToClient.responseToClient(response.getWriter());
     }
 }
