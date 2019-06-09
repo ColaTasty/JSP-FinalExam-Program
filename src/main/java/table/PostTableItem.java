@@ -64,6 +64,7 @@ public class PostTableItem extends TableItem {
             if (!this.resultSet.next())
                 throw new SQLException("主贴列表查询错误");
             List<PostBean> posts = new ArrayList<PostBean>();
+            this.resultSet.beforeFirst();
             while (this.resultSet.next()) {
                 PostBean pb = new PostBean();
                 int post_id = this.resultSet.getInt("post_id") > 0 ? this.resultSet.getInt("post_id") : 0;

@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 public class PostBean {
+    private int response_id;
     private int post_id;
     private int user_id;
     private String content;
@@ -17,6 +18,14 @@ public class PostBean {
     private long time;
     private int like_count;
     private int status;
+
+    public int getResponse_id() {
+        return response_id;
+    }
+
+    public void setResponse_id(int response_id) {
+        this.response_id = response_id;
+    }
 
     public int getPost_id() {
         return post_id;
