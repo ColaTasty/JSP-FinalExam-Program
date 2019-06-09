@@ -65,7 +65,7 @@
                                 "                            </p>\n" +
                                 "                            <a href=\"#\">收藏</a>\n" +
                                 "                            &nbsp;\n" +
-                                "                            <a href=\"#\">点击联系我</a>\n" +
+                                "                            <a href=\"#\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
                                 "                        </div>\n" +
                                 "                        <!-- 右侧图片，信息 -->\n" +
                                 "                        <div class=\"col-xs-3 div_right_info\">\n" +
@@ -75,6 +75,43 @@
                                 "                </div>");
                     }
                 %>
+                <!-- 模态框 -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">用户详细资料</h4>
+                            </div>
+                            <div class="modal-body">
+                                <!-- 详细信息 -->
+                                <div class="row">
+                                    <div class="col-md-4">姓名</div>
+                                    <div class="col-md-8">蒋斌</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">性别</div>
+                                    <div class="col-md-8">女</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">手机号</div>
+                                    <div class="col-md-8">110110110110</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">邮箱</div>
+                                    <div class="col-md-8">jbjbjbjb@qq.com</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 模态框End -->
             </div>
             <!-- 导航条 -->
             <nav aria-label="Page navigation" style="text-align: center">
