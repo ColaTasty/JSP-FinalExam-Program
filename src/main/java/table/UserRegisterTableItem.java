@@ -61,6 +61,11 @@ public class UserRegisterTableItem extends TableItem {
         }
     }
 
+
+    public static UserBean getUser(int user_id){
+        return refreshUserBean(user_id);
+    }
+
     public UserBean getUserBean(int user_id){
         return refreshUserBean(user_id);
     }

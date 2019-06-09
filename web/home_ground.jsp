@@ -70,8 +70,8 @@
                             out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"1\" onclick=\"col_onclick(this)\">取消收藏</a>\n");
                         else
                             out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"0\" onclick=\"col_onclick(this)\">收藏</a>\n");
-                        out.println("                            &nbsp;\n" +
-                                "                            <a href=\"javascript:void(0)\" id=\"user\" uid=" + user_id + " onclick=\"user_onclick(this)\">点击联系我</a>\n" +
+                        out.println("                        &nbsp;\n" +
+                                "                            <a href=\"javascript:void(0)\" id=\"user\" uid=" + user_id + " onclick=\"user_onclick(this)\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
                                 "                        </div>\n" +
                                 "                        <!-- 右侧图片，信息 -->\n" +
                                 "                        <div class=\"col-xs-3 div_right_info\">\n" +
@@ -81,6 +81,43 @@
                                 "                </div>\n");
                     }
                 %>
+                <!-- 模态框 -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">用户详细资料</h4>
+                            </div>
+                            <div class="modal-body">
+                                <!-- 详细信息 -->
+                                <div class="row">
+                                    <div class="col-md-4">姓名</div>
+                                    <div class="col-md-8" id="modal-name">正在加载...</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">性别</div>
+                                    <div class="col-md-8" id="modal-gender">正在加载...</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">手机号</div>
+                                    <div class="col-md-8" id="modal-mobile">正在加载...</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">邮箱</div>
+                                    <div class="col-md-8" id="modal-email">正在加载...</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 模态框End -->
             </div>
             <!-- 导航条 -->
             <nav aria-label="Page navigation" style="text-align: center">
@@ -170,7 +207,37 @@
         $(function () {
             var _this = a;
             var user_id = _this.getAttribute("uid");
-
+            var name_item = $("#modal-name");
+            var gender_item = $("#modal-gender");
+            var email_item = $("#modal-email");
+            var mobile_item = $("#modal-mobile");
+            name_item.text("正在加载...");
+            gender_item.text("正在加载...");
+            email_item.text("正在加载...");
+            mobile_item.text("正在加载...");
+            $.ajax({
+                url:"/contact-user",
+                method:"post",
+                dataType:"json",
+                data:{user_id:user_id},
+                success:function (res) {
+                    if (!res.isOK) {
+                        alert(res.msg);
+                        name_item.text("查找失败");
+                        gender_item.text("查找失败");
+                        email_item.text("查找失败");
+                        mobile_item.text("查找失败");
+                        return;
+                    }
+                    name_item.text(res.user_name);
+                    gender_item.text(res.gender);
+                    email_item.text(res.email);
+                    mobile_item.text(res.mobile);
+                },
+                error:function () {
+                    alert("查询失败！请检查网络连接！");
+                }
+            })
         })
     };
     var col_onclick = function (a) {

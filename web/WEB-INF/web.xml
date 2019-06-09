@@ -93,4 +93,13 @@
         <servlet-name>CollectPostServlet</servlet-name>
         <url-pattern>/collect-post</url-pattern>
     </servlet-mapping>
+<!--  ContactUserServlet  -->
+    <servlet>
+        <servlet-name>ContactUserServlet</servlet-name>
+        <servlet-class>servlet.square.ContactUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactUserServlet</servlet-name>
+        <url-pattern>/contact-user</url-pattern>
+    </servlet-mapping>
 </web-app>
