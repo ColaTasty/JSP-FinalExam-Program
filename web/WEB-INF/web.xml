@@ -84,4 +84,13 @@
         <servlet-name>AlterInformationServlet</servlet-name>
         <url-pattern>/alter-information</url-pattern>
     </servlet-mapping>
+    <!--  CollectPostServlet  -->
+    <servlet>
+        <servlet-name>CollectPostServlet</servlet-name>
+        <servlet-class>servlet.square.CollectPostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CollectPostServlet</servlet-name>
+        <url-pattern>/collect-post</url-pattern>
+    </servlet-mapping>
 </web-app>

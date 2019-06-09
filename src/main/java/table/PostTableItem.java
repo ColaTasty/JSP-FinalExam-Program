@@ -94,7 +94,7 @@ public class PostTableItem extends TableItem {
                 pb.setContent(content);
                 int like_count = this.resultSet.getInt("like_count");
                 pb.setLike_count(like_count);
-                JSONArray images_path = this.resultSet.getString("images_path") != null ? JSONArray.parseArray(this.resultSet.getString("images_path")) : null;
+                String images_path = this.resultSet.getString("images_path");
                 pb.setImages_path(images_path);
                 long time = this.resultSet.getLong("time");
                 pb.setTime(time);
