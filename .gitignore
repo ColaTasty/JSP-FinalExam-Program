@@ -3,3 +3,5 @@ target
 .idea
 DBConfig.java
 *.iml
+src\main\java\interfaces\config\*
+src/main/java/interfaces/config/*

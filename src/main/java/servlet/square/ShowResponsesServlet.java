@@ -1,6 +1,7 @@
 package servlet.square;
 
 import table.Post_ResponseTableItem;
+import com.alibaba.fastjson.*;
 import global.ResponseToClient;
 import global.config.DBConnecter;
 import java.io.IOException;
@@ -15,18 +16,18 @@ public class ShowResponsesServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        response.setHeader("content-type", "application/json;charset=utf-8");
-		Post_ResponseTableItem  rptitem= new Post_ResponseTableItem(DBConnecter.connecter);			//实例化，调用操作post_Response表方法
-        ResponseToClient responseToClient = new ResponseToClient();
-		JSONArray array = null;
-        if (ptitem.isQuery()==null){
-            responseToClient.responseToClient(true,"查询失败",response);
-            return;
-        }
-        else{
-     		 array = JSONArray.fromObject(isQuery());
-     		 System.out.println(array);
-             return;
-        }  
+//        response.setHeader("content-type", "application/json;charset=utf-8");
+//		Post_ResponseTableItem  rptitem= new Post_ResponseTableItem(DBConnecter.connecter);			//实例化，调用操作post_Response表方法
+//        ResponseToClient responseToClient = new ResponseToClient();
+//		JSONArray array = null;
+//        if (rptitem.isQuery()==null){
+//            responseToClient.responseToClient(true,"查询失败",response);
+//            return;
+//        }
+//        else{
+//     		 array = JSONArray.fromObject(isQuery());
+//     		 System.out.println(array);
+//             return;
+//        }
     }
 }

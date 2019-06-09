@@ -31,13 +31,13 @@ public class UserLoginServlet extends HttpServlet {
         UserBean userBean = userRegisterTableItem.getUserBean(account,password);
         if (userBean != null){
             request.getSession().setAttribute("userBean",userBean);
-            request.getRequestDispatcher("/home_ground.jsp").forward(request,response);
+            request.getRequestDispatcher("/query-square?page=1").forward(request,response);
         }else {
             ResponseToClient.alertMsg("请输入正确的帐号和密码！",response);
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ResponseToClient.doNotSupportGet(response);
+        ResponseToClient.illegalVisit(response);
     }
 }
