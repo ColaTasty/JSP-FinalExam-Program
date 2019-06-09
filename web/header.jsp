@@ -48,7 +48,7 @@
     <div class="row div_function">
         <div class="col-xs-4">
             <div class="panel panel-default" id="pFunc1">
-                <a href="home_ground.jsp" style="text-decoration: none;color: black;">
+                <a href="/query-square?page=1" style="text-decoration: none;color: black;">
                     <div class="panel-body">
                         <strong>广场</strong>
                         <img class="iv_function" src="src/img/ground.svg" alt="home">

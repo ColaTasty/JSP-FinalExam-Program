@@ -8,8 +8,10 @@ import com.alibaba.fastjson.JSONArray;
 import global.config.DBConnecter;
 import jdk.nashorn.internal.codegen.ObjectClassGenerator;
 
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,22 @@ public class PostTableItem extends TableItem {
     public PostTableItem(DBConnecter dbConnecter) {
         super("posts");
         this.dbConnecter = dbConnecter;
+    }
+
+    public static int countPosts() {
+        try {
+            String sql = "SELECT COUNT(post_id) AS total FROM posts WHERE status=1";
+            Statement statement = DBConnecter.connecter.getStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            int count = 0;
+            while (resultSet.next()){
+                count = resultSet.getInt("total");
+            }
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     /**
@@ -52,13 +70,14 @@ public class PostTableItem extends TableItem {
     }
 
     /**
-     *
+     * @author 黎江
      * @param page int
      * @return List|null
      */
     public List<PostBean> isQuery(int page) {
         try {
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE status=1 LIMIT " + page + ",10";
+            page -= 1;
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE status=1 LIMIT " + (page*10) + ",10";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.resultSet = this.preparedStatement.executeQuery();
             if (!this.resultSet.next())
@@ -94,21 +113,18 @@ public class PostTableItem extends TableItem {
      * @param content String
      * @param image   json
      * @param time    long
-     * @param status  int
      * @return boolean
      */
-    public boolean isRelease(int uid, String content, String image, long time, int like_count, int status) {
+    public boolean isRelease(int uid, String content, String image, long time) {
         try {
             //   long nowTime = System.currentTimeMillis() / 1000;
-            this.sql = "INSERT INTO " + this.getTableName() + "(user_id,content,images_path,time,like_count,status) VALUES(?,?,?,?,?,?)";
+            this.sql = "INSERT INTO " + this.getTableName() + "(user_id,content,images_path,time) VALUES(?,?,?,?)";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.preparedStatement.setInt(1, uid);
             this.preparedStatement.setString(2, content);
             this.preparedStatement.setString(3, image);
             this.preparedStatement.setLong(4, time);
-            this.preparedStatement.setInt(5, like_count);
-            this.preparedStatement.setLong(6, status);
-            return this.preparedStatement.execute();
+            return this.preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
