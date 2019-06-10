@@ -52,6 +52,7 @@
                         String content = postBean.getContent();
                         int post_id = postBean.getPost_id();
                         int user_id = postBean.getUser_id();
+                        String image_path = postBean.getImages_path();
                         long time = postBean.getTime();
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = new Date(time * 1000);
@@ -73,20 +74,28 @@
                         out.println("                        &nbsp;\n" +
                                 "                            <a href=\"javascript:void(0)\" id=\"user\" uid=" + user_id + " onclick=\"user_onclick(this)\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
                                 "                        </div>\n" +
-                                "                        <!-- 右侧图片，信息 -->\n" +
-                                "                        <div class=\"col-xs-3 div_right_info\">\n" +
-                                "                            <img class=\"iv_article img-rounded\" src=\"/src/img/user.ico\" alt=\"\">\n" +
-                                "                        </div>\n" +
-                                "                    </div>\n" +
+                                "                        <!-- 右侧图片，信息 -->\n");
+                        if (image_path != null) {
+                            out.println("                        <div class=\"col-xs-3 div_right_info\">\n" +
+                                    "                            <img class=\"iv_article img-rounded\" src=\"" + image_path + "\" alt=\"\">\n" +
+                                    "                        </div>\n");
+                        }else {
+                            out.println("                        <div class=\"col-xs-3 div_right_info\">\n" +
+                                    "                            <img class=\"iv_article img-rounded\" src=\"/src/img/user.ico\" alt=\"\">\n" +
+                                    "                        </div>\n");
+                        }
+                        out.println("                    </div>\n" +
                                 "                </div>\n");
                     }
                 %>
                 <!-- 模态框 -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                </button>
                                 <h4 class="modal-title" id="myModalLabel">用户详细资料</h4>
                             </div>
                             <div class="modal-body">
@@ -135,15 +144,16 @@
                             }
                         %>
                     </li>
-                    <%
-                        int page_index = 1;
-                        while (page_index <= total_page) {
-                            if (page_index == page_num)
-                                out.println("<li><a href=\"/query-square?page=" + page_index + "\" style=\"background-color:#ccc\">" + (page_index++) + "</a></li>");
-                            else
-                                out.println("<li><a href=\"/query-square?page=" + page_index + "\">" + (page_index++) + "</a></li>");
-                        }
-                    %>
+                    <li>
+                        <%
+                            int page_index = 1;
+                            while (page_index <= total_page) {
+                                if (page_index == page_num)
+                                    out.println("<a href=\"/query-square?page=" + page_index + "\" style=\"background-color:#ccc\">" + (page_index++) + "</a>");
+                                else
+                                    out.println("<a href=\"/query-square?page=" + page_index + "\">" + (page_index++) + "</a>");
+                            }
+                        %></li>
                     <li>
                         <%
                             if (page_num < total_page) {
@@ -159,30 +169,62 @@
         <!-- 右侧 -->
         <div class="col-xs-3 div_record">
             <!-- 用户信息 -->
-            <div class="jumbotron div_userinfo">
-                <img class="iv_user_head img-circle" src="/src/img/user.ico">
-                <div style="display: inline-block; margin-left: 12px;font-size: 18px;">用户名</div>
-            </div>
-            <!-- 随手记录 -->
-            <div style="display: flex;">
-                <div style="flex: 1">
-                    <hr>
+            <form action="/publish-information" method="post" enctype="multipart/form-data">
+                <div class="jumbotron div_userinfo">
+                    <img class="iv_user_head img-circle" src="/src/img/user.ico">
+                    <div style="display: inline-block; margin-left: 12px;font-size: 18px;">用户名</div>
                 </div>
-                <div style="text-align: center;line-height: 48px;color: #34374C">发布交友信息</div>
-                <div style="flex: 1">
-                    <hr>
+                <!-- 随手记录 -->
+                <div style="display: flex;">
+                    <div style="flex: 1">
+                        <hr>
+                    </div>
+                    <div style="text-align: center;line-height: 48px;color: #34374C">发布交友信息</div>
+                    <div style="flex: 1">
+                        <hr>
+                    </div>
                 </div>
-            </div>
-            <textarea class="form-control" rows="3" name="text" placeholder="内容:今晚吃什么"></textarea>
-            <br>
-            选择图片：
-            <div class="div_save">
-                <input type="file" accept="image/*"/>
-            </div>
-            <br>
-            <div class="div_save">
-                <button type="button" class="btn btn-primary btn_save_record">发布</button>
-            </div>
+                <textarea class="form-control" rows="3" id="post-content" name="content"
+                          placeholder="随手写下你的心情吧~"></textarea>
+                <br>
+                选择图片：
+                <div class="div_save">
+                    <input type="file" id="post-picture" accept="image/*"/>
+                </div>
+                <br>
+                <div class="div_save">
+                    <button type="button" id="btn-submit" class="btn btn-primary btn_save_record">发布</button>
+                </div>
+                <script>
+                    $(function () {
+                        $("#btn-submit").click(function () {
+                            var formData = new FormData();
+                            formData.append("content", $("#post-content").val());
+                            formData.append("post_picture", $("#post-picture")[0].files[0]);
+                            $.ajax({
+                                url: "/publish-information",
+                                dataType: "json",
+                                data: formData,
+                                type: "post",
+                                contentType: false,
+                                processData: false,
+                                success: function (res) {
+                                    alert(res.msg);
+                                    if (!res.isOK) {
+                                        if (res.deleted)
+                                            alert("图片上传失败！");
+                                        return;
+                                    }
+                                    window.location.reload();
+                                },
+                                error: function () {
+                                    alert("提交失败！请检查网络！");
+                                }
+                            })
+                        })
+                    })
+                </script>
+            </form>
             <hr>
             <!-- 退出 -->
             <div class="row div_little_func">
@@ -216,11 +258,11 @@
             email_item.text("正在加载...");
             mobile_item.text("正在加载...");
             $.ajax({
-                url:"/contact-user",
-                method:"post",
-                dataType:"json",
-                data:{user_id:user_id},
-                success:function (res) {
+                url: "/contact-user",
+                method: "post",
+                dataType: "json",
+                data: {user_id: user_id},
+                success: function (res) {
                     if (!res.isOK) {
                         alert(res.msg);
                         name_item.text("查找失败");
@@ -234,7 +276,7 @@
                     email_item.text(res.email);
                     mobile_item.text(res.mobile);
                 },
-                error:function () {
+                error: function () {
                     alert("查询失败！请检查网络连接！");
                 }
             })

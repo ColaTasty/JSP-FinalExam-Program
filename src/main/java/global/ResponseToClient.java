@@ -3,6 +3,7 @@ package global;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author 黎江
@@ -20,14 +21,15 @@ public class ResponseToClient extends TransJson {
     }
 
     /**
-     * @param isOK boolean
-     * @param msg  String
-     * @param out  PrintWriter
+     * @param response HttpServletResponse
      */
-    public void responseToClient(boolean isOK, String msg, PrintWriter out) {
-        this.setResultStatus(isOK);
-        this.setMsg(msg);
-        out.print(super.getJsonString());
+    public void responseToClient(HttpServletResponse response) {
+        try {
+            response.setHeader("content-type", "application/json;charset=utf-8");
+            response.getWriter().print(super.getJsonString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -61,7 +63,6 @@ public class ResponseToClient extends TransJson {
             out.println("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"/>");
             out.println("<script>");
             out.println("\talert(\"" + msg + "\");");
-//            out.println("\twindow.location.href=\"/home_user.jsp\";");
             out.println("\twindow.history.go(-1);");
             out.println("</script>");
             out.println("</head>");
@@ -101,6 +102,18 @@ public class ResponseToClient extends TransJson {
             out.println("</html>");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static String toUTF8(String str){
+        try {
+            String callback;
+            byte[] b = str.getBytes();
+            callback = new String(b,"utf-8");
+            return callback;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -77,7 +77,7 @@ public class PostTableItem extends TableItem {
     public List<PostBean> isQuery(int page) {
         try {
             page -= 1;
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE status=1 LIMIT " + (page*10) + ",10";
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE status=1 ORDER BY post_id DESC LIMIT " + (page*10) + ",10";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
             this.resultSet = this.preparedStatement.executeQuery();
             if (!this.resultSet.next())

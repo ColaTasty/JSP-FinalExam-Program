@@ -24,7 +24,7 @@ public class TransJson {
         json.put("isOK", status);
     }
 
-    public void setJsonValue(String key, String value) {
+    public void setJsonValue(String key, Object value) {
         json.put(key, value);
     }
 
