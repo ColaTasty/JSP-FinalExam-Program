@@ -14,7 +14,7 @@ public class PostBean {
     private int post_id;
     private int user_id;
     private String content;
-    private JSONArray images_path;
+    private String images_path;
     private long time;
     private int like_count;
     private int status;
@@ -51,11 +51,11 @@ public class PostBean {
         this.content = content;
     }
 
-    public JSONArray getImages_path() {
+    public String getImages_path() {
         return images_path;
     }
 
-    public void setImages_path(JSONArray images_path) {
+    public void setImages_path(String images_path) {
         this.images_path = images_path;
     }
 

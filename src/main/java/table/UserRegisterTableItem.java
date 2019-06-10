@@ -61,6 +61,11 @@ public class UserRegisterTableItem extends TableItem {
         }
     }
 
+
+    public static UserBean getUser(int user_id){
+        return refreshUserBean(user_id);
+    }
+
     public UserBean getUserBean(int user_id){
         return refreshUserBean(user_id);
     }
@@ -252,15 +257,20 @@ public class UserRegisterTableItem extends TableItem {
      * @param uid int
      * @return String|null
      */
-    public String getUserName(int uid) {
+    public static String getUserName(int uid) {
         try {
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE user_id=?";
-            this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
-            this.preparedStatement.setInt(1, uid);
-            this.resultSet = this.preparedStatement.executeQuery();
-            if (this.resultSet.next()) {
-                return this.resultSet.getString("user_name");
+            String callback;
+            String sql = "SELECT * FROM user_register WHERE user_id=?";
+            PreparedStatement preparedStatement = DBConnecter.connecter.getPreparedStatement(sql);
+            preparedStatement.setInt(1, uid);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.close();
+            if (resultSet.next()) {
+                callback = resultSet.getString("user_name");
+                resultSet.close();
+                return callback;
             } else {
+                resultSet.close();
                 throw new SQLException("未找到对应user_id");
             }
         } catch (SQLException e) {

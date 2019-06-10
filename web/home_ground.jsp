@@ -4,9 +4,11 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.lang.reflect.Array" %>
+<%@ page import="bean.PostListBean" %>
+<%@ page import="table.CollectionsTableItem" %>
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
 <%@include file="jsp_header.jsp" %>
-<jsp:useBean id="postListBean" class="bean.PostListBean" scope="request"/>
+<jsp:useBean id="postListBean" class="bean.PostListBean" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,33 +48,37 @@
                 </a>
                 <!-- 帖子列表 -->
                 <%
-                    for(PostBean postBean:postListBean.getPosts()){
-                        String content =  postBean.getContent();
+                    for (PostBean postBean : postListBean.getPosts()) {
+                        String content = postBean.getContent();
                         int post_id = postBean.getPost_id();
                         int user_id = postBean.getUser_id();
                         long time = postBean.getTime();
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = new Date(time*1000);
+                        Date date = new Date(time * 1000);
                         String str_time = simpleDateFormat.format(date);
                         out.println("<div class=\"list-group-item item_article\">\n" +
                                 "                    <div class=\"row\">\n" +
                                 "                        <div class=\"div_center col-xs-9\">\n" +
                                 "                            <p class=\"list-group-item-text div_article_content\">\n" +
-                                content+"\n" +
+                                content + "\n" +
                                 "                            </p>\n" +
                                 "                            <p class=\"list-group-item-text div_article\">\n" +
-                                str_time+"\n" +
-                                "                            </p>\n" +
-                                "                            <a href=\"#\">收藏</a>\n" +
-                                "                            &nbsp;\n" +
-                                "                            <a href=\"#\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
+                                str_time + "\n" +
+                                "                            </p>\n"
+                        );
+                        if (CollectionsTableItem.isCollected(post_id, userBean.getUser_id()))
+                            out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"1\" onclick=\"col_onclick(this)\">取消收藏</a>\n");
+                        else
+                            out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"0\" onclick=\"col_onclick(this)\">收藏</a>\n");
+                        out.println("                        &nbsp;\n" +
+                                "                            <a href=\"javascript:void(0)\" id=\"user\" uid=" + user_id + " onclick=\"user_onclick(this)\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
                                 "                        </div>\n" +
                                 "                        <!-- 右侧图片，信息 -->\n" +
                                 "                        <div class=\"col-xs-3 div_right_info\">\n" +
                                 "                            <img class=\"iv_article img-rounded\" src=\"/src/img/user.ico\" alt=\"\">\n" +
                                 "                        </div>\n" +
                                 "                    </div>\n" +
-                                "                </div>");
+                                "                </div>\n");
                     }
                 %>
                 <!-- 模态框 -->
@@ -87,22 +93,22 @@
                                 <!-- 详细信息 -->
                                 <div class="row">
                                     <div class="col-md-4">姓名</div>
-                                    <div class="col-md-8">蒋斌</div>
+                                    <div class="col-md-8" id="modal-name">正在加载...</div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4">性别</div>
-                                    <div class="col-md-8">女</div>
+                                    <div class="col-md-8" id="modal-gender">正在加载...</div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4">手机号</div>
-                                    <div class="col-md-8">110110110110</div>
+                                    <div class="col-md-8" id="modal-mobile">正在加载...</div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-4">邮箱</div>
-                                    <div class="col-md-8">jbjbjbjb@qq.com</div>
+                                    <div class="col-md-8" id="modal-email">正在加载...</div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -117,24 +123,35 @@
             <nav aria-label="Page navigation" style="text-align: center">
                 <ul class="pagination">
                     <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
+                        <%
+                            int page_num = postListBean.getPage();
+                            int tmp = postListBean.getPosts_total() % 10;
+                            int total_posts = postListBean.getPosts_total();
+                            int total_page = tmp > 0 ? ((total_posts - tmp) / 10) + 1 : (total_posts - tmp) / 10;
+                            if (page_num != 1) {
+                                out.println("<a href=\"/query-square?page=" + (page_num - 1) + "\" aria-label=\"Previous\">\n" +
+                                        "                            <span aria-hidden=\"true\">&laquo;</span>\n" +
+                                        "                        </a>");
+                            }
+                        %>
                     </li>
                     <%
                         int page_index = 1;
-                        int tmp = postListBean.getPosts_total() % 10;
-                        System.out.println(postListBean.getPosts_total());
-                        int total_posts = postListBean.getPosts_total();
-                        int total_page = tmp > 0 ? ((total_posts - tmp)/10)+1:(total_posts - tmp)/10;
-                        while (page_index <= total_page){
-                            out.println("<li><a href=\"/query-square?page="+page_index+"\">"+(page_index++)+"</a></li>");
+                        while (page_index <= total_page) {
+                            if (page_index == page_num)
+                                out.println("<li><a href=\"/query-square?page=" + page_index + "\" style=\"background-color:#ccc\">" + (page_index++) + "</a></li>");
+                            else
+                                out.println("<li><a href=\"/query-square?page=" + page_index + "\">" + (page_index++) + "</a></li>");
                         }
                     %>
                     <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
+                        <%
+                            if (page_num < total_page) {
+                                out.println("<a href=\"/query-square?page=" + (page_num + 1) + "\" aria-label=\"Previous\">\n" +
+                                        "                            <span aria-hidden=\"true\">&raquo;</span>\n" +
+                                        "                        </a>");
+                            }
+                        %>
                     </li>
                 </ul>
             </nav>
@@ -185,5 +202,72 @@
         </div>
     </div>
 </div>
+<script>
+    var user_onclick = function (a) {
+        $(function () {
+            var _this = a;
+            var user_id = _this.getAttribute("uid");
+            var name_item = $("#modal-name");
+            var gender_item = $("#modal-gender");
+            var email_item = $("#modal-email");
+            var mobile_item = $("#modal-mobile");
+            name_item.text("正在加载...");
+            gender_item.text("正在加载...");
+            email_item.text("正在加载...");
+            mobile_item.text("正在加载...");
+            $.ajax({
+                url:"/contact-user",
+                method:"post",
+                dataType:"json",
+                data:{user_id:user_id},
+                success:function (res) {
+                    if (!res.isOK) {
+                        alert(res.msg);
+                        name_item.text("查找失败");
+                        gender_item.text("查找失败");
+                        email_item.text("查找失败");
+                        mobile_item.text("查找失败");
+                        return;
+                    }
+                    name_item.text(res.user_name);
+                    gender_item.text(res.gender);
+                    email_item.text(res.email);
+                    mobile_item.text(res.mobile);
+                },
+                error:function () {
+                    alert("查询失败！请检查网络连接！");
+                }
+            })
+        })
+    };
+    var col_onclick = function (a) {
+        $(function () {
+            var _this = a;
+            var pid = _this.getAttribute("pid");
+            var is_coled = _this.getAttribute("bool");
+            $.ajax({
+                url: "/collect-post",
+                method: "post",
+                dataType: "json",
+                data: {
+                    post_id: pid,
+                    is_coled: is_coled,
+                    user_id:<%= userBean.getUser_id()%>
+                },
+                success: function (res) {
+                    alert(res.msg);
+                    if (!res.isOK) {
+                        return;
+                    }
+                    _this.setAttribute("bool", is_coled === "1" ? "0" : "1");
+                    _this.innerText = _this.getAttribute("bool") === "1" ? "取消收藏" : "收藏";
+                },
+                error: function () {
+                    alert("网络连接错误！");
+                }
+            })
+        })
+    }
+</script>
 </body>
 </html>
