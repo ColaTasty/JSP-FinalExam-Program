@@ -105,10 +105,14 @@ public class ResponseToClient extends TransJson {
         }
     }
 
-    public static String toUTF8(String str){
+    public static String toUTF8(String str, String resencoding){
         try {
             String callback;
-            byte[] b = str.getBytes();
+            byte[] b;
+            if (resencoding.length() > 0)
+                b = str.getBytes(resencoding);
+            else
+                b = str.getBytes();
             callback = new String(b,"utf-8");
             return callback;
         } catch (UnsupportedEncodingException e) {

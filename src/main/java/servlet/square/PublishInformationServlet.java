@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author 黎江、杨子豪
+ * @author 黎江、杨子豪、温剑
  */
 public class PublishInformationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +62,7 @@ public class PublishInformationServlet extends HttpServlet {
 //                    如果是文本项 String
                     if (request_item.isFormField()) {
                         String name = request_item.getFieldName();
-                        String value = request_item.getString();
+                        String value = request_item.getString("UTF-8");
                         kvSquare.put(name, value);
                     }
 //                    如果图片未上传，且是文件项 File
@@ -99,7 +99,7 @@ public class PublishInformationServlet extends HttpServlet {
                 UserBean userBean = (UserBean) request.getSession().getAttribute("userBean");
                 int user_id = userBean.getUser_id();
                 PostTableItem postTableItem = new PostTableItem(DBConnecter.connecter);
-                String utf8_content = ResponseToClient.toUTF8(str_content);
+                String utf8_content = ResponseToClient.toUTF8(str_content,"GB2312");
                 System.out.println(utf8_content);
                 System.out.println(str_content);
 //                if (postTableItem.isRelease(user_id, utf8_content, fileViewPath, time)) {
@@ -123,22 +123,6 @@ public class PublishInformationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
-//        String pUser_id = request.getParameter("user_id");                     //用户名
-//        String pContent = request.getParameter("content");                     //发布内容
-//        String pImage = request.getParameter("pImage");                         //发布图片
-//        if (pUser_id == null || pContent == null){
-//            ResponseToClient.illegalVisit(response);
-//            return;
-//        }
-//        long nowTime = System.currentTimeMillis() / 1000;                          //发布时间
-//        int user_id = Integer.parseInt(pUser_id);
-//        ResponseToClient responseToClient = new ResponseToClient();
-//        PostTableItem ptitem = new PostTableItem(DBConnecter.connecter);           //实例化，调用操作post表方法
-//        if (ptitem.isRelease(user_id, pContent, pImage, nowTime)) {
-//            responseToClient.responseToClient(true, "发布成功", response);
-//        } else {
-//            responseToClient.responseToClient(false, " 发布失败，输入内容有误", response);
-//        }
+        ResponseToClient.illegalVisit(response);
     }
 }

@@ -4,6 +4,9 @@ import java.io.File;
 
 import static java.lang.System.getProperty;
 
+/**
+ * @author 黎江
+ */
 public interface UploadConfig {
 //            设定内存临界最大值 5MB，超出部分将保存在系统临时分配区
     int SIZE_THRESHOLD = 1024*1024*5;
