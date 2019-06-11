@@ -59,7 +59,7 @@
         </div>
         <div class="col-xs-4">
             <div class="panel panel-default" id="pFunc2">
-                <a href="home_friends.jsp" style="text-decoration: none;color: black;">
+                <a href="/view-users?page=1" style="text-decoration: none;color: black;">
                     <div class="panel-body">
                         <strong>交友</strong>
                         <img class="iv_function" src="src/img/community.svg" alt="">

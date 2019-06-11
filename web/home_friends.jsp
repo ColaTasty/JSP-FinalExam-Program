@@ -1,6 +1,9 @@
+<%@ page import="com.alibaba.fastjson.JSON" %>
+<%@ page import="bean.UserListBean" %>
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="jsp_header.jsp" %>
+<jsp:useBean id="userListBean" class="bean.UserListBean" scope="request"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,35 +42,84 @@
                 </a>
                 <!-- 帖子列表 -->
                 <!-- start -->
-                <c:forEach items="${userList}" var="user">
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img alt="100%x180" src="/src/img/ic_p8.jpg"
-                                 style="height: 180px; width: 100%; display: block;">
-                        </a>
-                        <div class="caption">
-                            <h3>${user.user_name}</h3>
-                            <c:if test="${user.gender == 1}">
-                                <h4>男</h4>
-                            </c:if>
-                            <c:if test="${user.gender == 0}">
-                                <h4>女</h4>
-                            </c:if>
-                            <p>
-                                <a href="#" class="btn btn-primary" role="button" data-toggle="modal" data-target="#myModal" data-user="{${user}}">
-                                    详细资料
-                                </a>
-                            </p>
+                <c:if test="${userListBean != null}">
+                    <c:forEach items="${userListBean.getUsersBean()}" var="user">
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img alt="100%x180" src="/src/img/ic_p8.jpg"
+                                     style="height: 180px; width: 100%; display: block;">
+                            </a>
+                            <div class="caption">
+                                <c:if test="${user.user_name != null}">
+                                    <h3>${user.user_name}</h3>
+                                </c:if>
+                                <c:if test="${user.user_name == null}">
+                                    <h3>没有姓名的用户</h3>
+                                </c:if>
+                                <c:if test="${user.gender == 1}">
+                                    <h4>男</h4>
+                                </c:if>
+                                <c:if test="${user.gender == 0}">
+                                    <h4>女</h4>
+                                </c:if>
+                                <div style="display: none;"></div>
+                                <p id="user-detail">
+                                    <a href="javascript:void(0)" onclick="user_detail_onClick(this)"
+                                       uid="${user.user_id}" class="btn btn-primary" role="button" data-toggle="modal"
+                                       data-target="#myModal">
+                                        详细资料
+                                    </a>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </c:if>
+                <script>
+                    var user_detail_onClick = function (e) {
+                        $(function () {
+                            var _this = e;
+                            var modal = $("#myModal");
+                            var uid = _this.getAttribute("uid");
+                            console.log(uid);
+                            modal.find('#username').val("正在加载...");
+                            modal.find('#gender').val("正在加载...");
+                            modal.find('#phone').val("正在加载...");
+                            modal.find('#email').val("正在加载...");
+                            $.ajax({
+                                url: "/contact-user",
+                                type: "post",
+                                dataType: "json",
+                                data: {user_id: uid},
+                                success: function (res) {
+                                    if (!res.isOK) {
+                                        alert(res.msg);
+                                        modal.find('#username').val("查找失败");
+                                        modal.find('#gender').val("查找失败");
+                                        modal.find('#phone').val("查找失败");
+                                        modal.find('#email').val("查找失败");
+                                        return;
+                                    }
+                                    modal.find('#username').val(res.user_name);
+                                    modal.find('#gender').val(res.gender);
+                                    modal.find('#phone').val(res.email);
+                                    modal.find('#email').val(res.mobile);
+                                },
+                                error: function () {
+                                    alert("查询失败！请检查网络连接！");
+                                }
+                            });
+                        });
+                    }
+                </script>
                 <!-- End -->
                 <!-- 模态框 -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                </button>
                                 <h4 class="modal-title" id="myModalLabel">用户详细资料</h4>
                             </div>
                             <div class="modal-body">
@@ -110,21 +162,48 @@
             </div>
         </div>
     </div>
+    <!-- 导航条 -->
+    <nav aria-label="Page navigation" style="text-align: center">
+        <ul class="pagination">
+            <!-- 上一页 -->
+            <li>
+                <%
+                    int page_num = userListBean.getPage();
+                    int tmp = userListBean.getUser_count() % 10;
+                    int total_users = userListBean.getUser_count();
+                    int total_page = tmp > 0 ? ((total_users - tmp) / 10) + 1 : (total_users - tmp) / 10;
+                    if (page_num != 1) {
+                        out.println("<a href=\"/query-square?page=" + (page_num - 1) + "\" aria-label=\"Previous\">\n" +
+                                "                            <span aria-hidden=\"true\">&laquo;</span>\n" +
+                                "                        </a>");
+                    }
+                %>
+            </li>
+            <!-- 页码 -->
+            <li>
+                <%
+                    int page_index = 1;
+                    while (page_index <= total_page) {
+                        if (page_index == page_num)
+                            out.println("<a href=\"/query-square?page=" + page_index + "\" style=\"background-color:#ccc\">" + (page_index++) + "</a>");
+                        else
+                            out.println("<a href=\"/query-square?page=" + page_index + "\">" + (page_index++) + "</a>");
+                    }
+                %>
+            </li>
+            <!-- 下一页 -->
+            <li>
+                <%
+                    if (page_num < total_page) {
+                        out.println("<a href=\"/query-square?page=" + (page_num + 1) + "\" aria-label=\"Previous\">\n" +
+                                "                            <span aria-hidden=\"true\">&raquo;</span>\n" +
+                                "                        </a>");
+                    }
+                %>
+            </li>
+        </ul>
+    </nav>
+    <!-- 导航条End -->
 </div>
-<script>
-    $(function () {
-        $("#myModal").on("show.bs.modal",function (e) {
-            var user = $(e.relatedTarget).data("user");
-            modal.find('#username').val(user.user_name);
-            if (user.gender==1){
-                modal.find('#gender').val("男");
-            } else {
-                modal.find('#gender').val("女");
-            }
-            modal.find('#phone').val(user.mobile);
-            modal.find('#email').val(user.email);
-        });
-    })
-</script>
 </body>
 </html>

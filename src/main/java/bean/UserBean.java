@@ -20,6 +20,7 @@ public class UserBean {
     private int status;
     private boolean admin = false;
     private int admin_id = -1;
+    private String avatar;
 
     public int getAdmin_id() {
         return admin_id;

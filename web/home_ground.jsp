@@ -8,7 +8,7 @@
 <%@ page import="table.CollectionsTableItem" %>
 <%@page contentType="text/html;charset=utf-8" pageEncoding="UTF-8" %>
 <%@include file="jsp_header.jsp" %>
-<jsp:useBean id="postListBean" class="bean.PostListBean" scope="session"/>
+<jsp:useBean id="postListBean" class="bean.PostListBean" scope="request"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,44 +48,50 @@
                 </a>
                 <!-- 帖子列表 -->
                 <%
-                    for (PostBean postBean : postListBean.getPosts()) {
-                        String content = postBean.getContent();
-                        int post_id = postBean.getPost_id();
-                        int user_id = postBean.getUser_id();
-                        String image_path = postBean.getImages_path();
-                        long time = postBean.getTime();
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = new Date(time * 1000);
-                        String str_time = simpleDateFormat.format(date);
-                        out.println("<div class=\"list-group-item item_article\">\n" +
-                                "                    <div class=\"row\">\n" +
-                                "                        <div class=\"div_center col-xs-9\">\n" +
-                                "                            <p class=\"list-group-item-text div_article_content\">\n" +
-                                content + "\n" +
-                                "                            </p>\n" +
-                                "                            <p class=\"list-group-item-text div_article\">\n" +
-                                str_time + "\n" +
-                                "                            </p>\n"
-                        );
-                        if (CollectionsTableItem.isCollected(post_id, userBean.getUser_id()))
-                            out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"1\" onclick=\"col_onclick(this)\">取消收藏</a>\n");
-                        else
-                            out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"0\" onclick=\"col_onclick(this)\">收藏</a>\n");
-                        out.println("                        &nbsp;\n" +
-                                "                            <a href=\"javascript:void(0)\" id=\"user\" uid=" + user_id + " onclick=\"user_onclick(this)\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
-                                "                        </div>\n" +
-                                "                        <!-- 右侧图片，信息 -->\n");
-                        if (image_path != null) {
-                            out.println("                        <div class=\"col-xs-3 div_right_info\">\n" +
-                                    "                            <img class=\"iv_article img-rounded\" src=\"" + image_path + "\" alt=\"\">\n" +
-                                    "                        </div>\n");
-                        }else {
-                            out.println("                        <div class=\"col-xs-3 div_right_info\">\n" +
-                                    "                            <img class=\"iv_article img-rounded\" src=\"/src/img/user.ico\" alt=\"\">\n" +
-                                    "                        </div>\n");
+                    if (postListBean.getPosts() != null) {
+                        for (PostBean postBean : postListBean.getPosts()) {
+                            String content = postBean.getContent();
+                            int post_id = postBean.getPost_id();
+                            int user_id = postBean.getUser_id();
+                            String image_path = postBean.getImages_path();
+                            long time = postBean.getTime();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            Date date = new Date(time * 1000);
+                            String str_time = simpleDateFormat.format(date);
+                            out.println("<div class=\"list-group-item item_article\">\n" +
+                                    "                    <div class=\"row\">\n" +
+                                    "                        <div class=\"div_center col-xs-9\">\n" +
+                                    "                            <p class=\"list-group-item-text div_article_content\">\n" +
+                                    content + "\n" +
+                                    "                            </p>\n" +
+                                    "                            <p class=\"list-group-item-text div_article\">\n" +
+                                    str_time + "\n" +
+                                    "                            </p>\n"
+                            );
+                            if (CollectionsTableItem.isCollected(post_id, userBean.getUser_id()))
+                                out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"1\" onclick=\"col_onclick(this)\">取消收藏</a>\n");
+                            else
+                                out.println("<a href=\"javascript:void(0)\" id=\"col\" pid=" + post_id + " bool=\"0\" onclick=\"col_onclick(this)\">收藏</a>\n");
+                            out.println("                        &nbsp;\n" +
+                                    "                            <a href=\"javascript:void(0)\" id=\"user\" uid=" + user_id + " onclick=\"user_onclick(this)\" data-toggle=\"modal\" data-target=\"#myModal\">点击联系我</a>\n" +
+                                    "                        </div>\n" +
+                                    "                        <!-- 右侧图片，信息 -->\n");
+                            if (image_path != null) {
+                                out.println("                        <div class=\"col-xs-3 div_right_info\">\n" +
+                                        "                            <img class=\"iv_article img-rounded\" src=\"" + image_path + "\" alt=\"\">\n" +
+                                        "                        </div>\n");
+                            } else {
+                                out.println("                        <div class=\"col-xs-3 div_right_info\">\n" +
+                                        "                            <img class=\"iv_article img-rounded\" src=\"/src/img/user.ico\" alt=\"\">\n" +
+                                        "                        </div>\n");
+                            }
+                            out.println("                    </div>\n" +
+                                    "                </div>\n");
                         }
-                        out.println("                    </div>\n" +
-                                "                </div>\n");
+                    } else {
+                        out.println("<script>");
+                        out.println("alert(\"还没有人发帖噢~\");");
+                        out.println("</script>");
                     }
                 %>
                 <!-- 模态框 -->
@@ -131,6 +137,7 @@
             <!-- 导航条 -->
             <nav aria-label="Page navigation" style="text-align: center">
                 <ul class="pagination">
+                    <!-- 上一页 -->
                     <li>
                         <%
                             int page_num = postListBean.getPage();
@@ -144,6 +151,7 @@
                             }
                         %>
                     </li>
+                    <!-- 页码 -->
                     <li>
                         <%
                             int page_index = 1;
@@ -153,7 +161,9 @@
                                 else
                                     out.println("<a href=\"/query-square?page=" + page_index + "\">" + (page_index++) + "</a>");
                             }
-                        %></li>
+                        %>
+                    </li>
+                    <!-- 下一页 -->
                     <li>
                         <%
                             if (page_num < total_page) {

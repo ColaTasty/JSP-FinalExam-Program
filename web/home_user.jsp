@@ -158,6 +158,116 @@
                     <div id="post" class="tab-pane fade">
                         <!-- 内容 -->
                         <!-- start -->
+                        <!-- 我的帖子，JS备份 -->
+                        <!--<script>
+                            $(function () {
+                                var ajax_error = function () {
+                                    alert("请求失败，请检查网络");
+                                };
+                                var getTotalPage = function (postTotal) {
+                                    var tmp = postTotal % 10;
+                                    var pagetotal;
+                                    if (tmp > 0){
+                                        pagetotal = ((postTotal - tmp)/10) +1;
+                                    }else {
+                                        pagetotal = postTotal / 10;
+                                    }
+                                    return pagetotal;
+                                };
+                                var myPostsPage = 1;
+                                var myPostsList = undefined;
+                                /**
+                                 *
+                                 * @param data = {page}
+                                 * @param success = Function
+                                 */
+                                var getMyPostsList = function (data, success) {
+                                    $.ajax({
+                                        url: "/get-my-posts",
+                                        type: "post",
+                                        dataTpye: "json",
+                                        data: {
+                                            user_id:<%= userBean.getUser_id()%>,
+                                            page: data.page
+                                        },
+                                        success: success,
+                                        error: ajax_error
+                                    });
+                                };
+                                /**
+                                 *
+                                 * @param pageTotal = number
+                                 * @param page = number
+                                 */
+                                var setMyPostsNavBar = function (pageTotal, page) {
+                                    var nav = $("#my-posts-nav");
+                                    nav.empty();
+                                    var getInit_ul = function () {
+                                        var ul = $("ul");
+                                        ul.addClass("pagination");
+                                        return ul;
+                                    };
+                                    var getInit_a = function () {
+                                        var a = $("a");
+                                        a.attr("href", "javascript:void(0)");
+                                        a.attr("aria-label", "Previous");
+                                        return a;
+                                    };
+                                    var getInit_li = function () {
+                                        return $("li");
+                                    };
+                                    var getInit_span = function () {
+                                        var span = $("span");
+                                        span.attr("aria-hidden", "true");
+                                        return span;
+                                    };
+                                    var ul = getInit_ul();
+                                    if (page !== 1 && pageTotal > 1) {
+                                        var last_li = getInit_li();
+                                        var last_a = getInit_a();
+                                        var last_span = getInit_span();
+                                        last_span.text("&laquo;");
+                                        last_a.append(last_span);
+                                        last_a.attr("id", "last-my-posts-page");
+                                        last_a.attr("page", page - 1);
+                                        last_li.append(last_a);
+                                        ul.append(last_li);
+                                    }
+                                    var pageIdx = 0;
+                                    while (pageIdx <= pageTotal) {
+                                        var m_li = getInit_li();
+                                        var m_a = getInit_a();
+                                        var m_span = getInit_span();
+                                        m_span.text(pageIdx);
+                                        m_a.append(m_span);
+                                        m_a.attr("onclick","myPostsPageOnClick(this)");
+                                        m_a.attr("page",pageIdx++);
+                                        if (pageIdx === page)
+                                            m_a.attr("style","background-color:#ccc");
+                                        m_li.append(m_a);
+                                        ul.append(m_li);
+                                    }
+                                    if (page < pageTotal) {
+                                        var next_li = getInit_li();
+                                        var next_a = getInit_a();
+                                        var next_span = getInit_span();
+                                        next_span.text("&raquo;");
+                                        next_a.append(next_span);
+                                        next_a.attr("id", "next-my-posts-page");
+                                        next_a.attr("page", page - 1);
+                                        next_li.append(next_a);
+                                        ul.append(next_li);
+                                    }
+                                    nav.append(ul);
+                                };
+                                getMyPostsList({page:myPostsPage},function (res) {
+                                    var posts = res.posts;
+                                    setMyPostsNavBar(getTotalPage(posts.posts_total),posts.page);
+                                });
+                                $("#post").find(".list-group-item").remove();
+                            })
+                        </script>-->
+                        <!-- 我的帖子，JS备份 end -->
                         <div class="list-group-item item_article">
                             <div class="row">
                                 <div class="div_center col-xs-9">
@@ -212,6 +322,27 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 导航条 -->
+                        <nav id="my-posts-nav" aria-label="Page navigation" style="text-align: center">
+                            <ul class="pagination">
+                                <!-- 上一页 -->
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <!-- 页码 -->
+                                <li>
+                                    <a href="#" style="background-color:#ccc">1</a>
+                                </li>
+                                <!-- 下一页 -->
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <!-- end -->
                     <!-- 我的收藏 -->
@@ -274,6 +405,27 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 导航条 -->
+                        <nav aria-label="Page navigation" style="text-align: center">
+                            <ul class="pagination">
+                                <!-- 上一页 -->
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <!-- 页码 -->
+                                <li>
+                                    <a href="#" style="background-color:#ccc">1</a>
+                                </li>
+                                <!-- 下一页 -->
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
 

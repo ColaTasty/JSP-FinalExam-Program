@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostListBean {
-    private List<PostBean> posts = new ArrayList<PostBean>();
+    private List<PostBean> posts;
     private int page = 0;
     private int posts_total = 0;
 

@@ -48,41 +48,6 @@ public class Post_ResponseTableItem extends TableItem {
     }
 
     /**
-     *
-     * @param post_id int
-     * @param page int
-     * @return List<PostBean>
-     */
-    public List<PostBean> isQuery(int post_id, int page) {
-        try {
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE status=1 AND post_id=" + post_id + " LIMIT " + page + ",10";
-            this.statement = this.dbConnecter.getStatement();
-            this.resultSet = this.statement.executeQuery(this.sql);
-            if (!this.resultSet.next())
-                throw new SQLException("未找到更多回复");
-            this.resultSet.beforeFirst();
-            List<PostBean> response_posts = new ArrayList<PostBean>();
-            while (this.resultSet.next()){
-                PostBean pb = new PostBean();
-                int response_id = this.resultSet.getInt("response_id") > 0 ? this.resultSet.getInt("post_id") : 0;
-                pb.setPost_id(response_id);
-                int user_id = this.resultSet.getInt("user_id") > 0 ? this.resultSet.getInt("user_id") : 0;
-                pb.setUser_id(user_id);
-                String content = this.resultSet.getString("content") != null ? this.resultSet.getString("content") : "";
-                pb.setContent(content);
-                long time = this.resultSet.getLong("time");
-                pb.setTime(time);
-                pb.setStatus(this.resultSet.getInt("status"));
-                response_posts.add(pb);
-            }
-            return response_posts;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
      * @return boolean
      */
     public boolean isRelease(int pid, int uid, String content, long time) {

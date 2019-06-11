@@ -6,9 +6,11 @@
 
 package bean;
 
+import java.util.List;
+
 public class UserListBean {
     private int user_count = 0;
-    private UserBean userBean;
+    private List<UserBean> usersBean;
     private int page = 0;
 
     public int getUser_count() {
@@ -19,12 +21,12 @@ public class UserListBean {
         this.user_count = user_count;
     }
 
-    public UserBean getUserBean() {
-        return userBean;
+    public List<UserBean> getUsersBean() {
+        return usersBean;
     }
 
-    public void setUserBean(UserBean userBean) {
-        this.userBean = userBean;
+    public void setUsersBean(List<UserBean> usersBean) {
+        this.usersBean = usersBean;
     }
 
     public int getPage() {

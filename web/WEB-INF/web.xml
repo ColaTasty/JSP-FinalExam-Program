@@ -93,7 +93,7 @@
         <servlet-name>CollectPostServlet</servlet-name>
         <url-pattern>/collect-post</url-pattern>
     </servlet-mapping>
-<!--  ContactUserServlet  -->
+    <!--  ContactUserServlet  -->
     <servlet>
         <servlet-name>ContactUserServlet</servlet-name>
         <servlet-class>servlet.square.ContactUserServlet</servlet-class>
@@ -101,5 +101,41 @@
     <servlet-mapping>
         <servlet-name>ContactUserServlet</servlet-name>
         <url-pattern>/contact-user</url-pattern>
+    </servlet-mapping>
+    <!--  ViewUsersServlet  -->
+    <servlet>
+        <servlet-name>ViewUsersServlet</servlet-name>
+        <servlet-class>servlet.contact.ViewUsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewUsersServlet</servlet-name>
+        <url-pattern>/view-users</url-pattern>
+    </servlet-mapping>
+    <!--  DeletePostByMyselfServlet  -->
+    <servlet>
+        <servlet-name>DeletePostByMyselfServlet</servlet-name>
+        <servlet-class>servlet.user.DeletePostByMyselfServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePostByMyselfServlet</servlet-name>
+        <url-pattern>/delete-post-by-myself</url-pattern>
+    </servlet-mapping>
+    <!--  GetMyCollectionsServlet  -->
+    <servlet>
+        <servlet-name>GetMyCollectionsServlet</servlet-name>
+        <servlet-class>servlet.user.GetMyCollectionsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetMyCollectionsServlet</servlet-name>
+        <url-pattern>/get-my-collections</url-pattern>
+    </servlet-mapping>
+    <!--  GetMyPostsServlet  -->
+    <servlet>
+        <servlet-name>GetMyPostsServlet</servlet-name>
+        <servlet-class>servlet.user.GetMyPostsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetMyPostsServlet</servlet-name>
+        <url-pattern>/get-my-posts</url-pattern>
     </servlet-mapping>
 </web-app>

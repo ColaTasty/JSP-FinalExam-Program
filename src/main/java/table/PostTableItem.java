@@ -6,6 +6,7 @@ import bean.PostBean;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import global.config.DBConnecter;
+import javafx.geometry.Pos;
 import jdk.nashorn.internal.codegen.ObjectClassGenerator;
 
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author 杨子豪，温剑
+ * @author 杨子豪、温剑、黎江
  */
 public class PostTableItem extends TableItem {
 
@@ -27,12 +28,20 @@ public class PostTableItem extends TableItem {
     }
 
     public static int countPosts() {
+        return countMyPosts(-1);
+    }
+
+    public static int countMyPosts(int user_id){
         try {
-            String sql = "SELECT COUNT(post_id) AS total FROM posts WHERE status=1";
+            String sql;
+            if (user_id > 0)
+                sql = "SELECT COUNT(post_id) AS total FROM posts WHERE user_id="+user_id;
+            else
+                sql = "SELECT COUNT(post_id) AS total FROM posts WHERE status=1";
             Statement statement = DBConnecter.connecter.getStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             int count = 0;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 count = resultSet.getInt("total");
             }
             return count;
@@ -43,62 +52,55 @@ public class PostTableItem extends TableItem {
     }
 
     /**
-     * @return boolean|null
+     *
+     * @param user_id int
+     * @param page int
+     * @return List<PostBean>
+     * @author 黎江
      */
-    public String[][] isQuery() {
-        try {
-            this.sql = "SELECT * FROM " + this.getTableName();
-            this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
-            this.resultSet = this.preparedStatement.executeQuery();
-
-            ResultSetMetaData metaData = this.resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            int rowNumber = this.resultSet.getRow();
-            String[][] tableResult = new String[rowNumber][columnCount];
-            this.resultSet.beforeFirst();
-            int i = 0;
-            while (this.resultSet.next()) {
-                for (int k = 0; k < columnCount; k++)
-                    tableResult[i][k] = this.resultSet.getString(k + 1);
-                i++;
-            }
-            return tableResult;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public List<PostBean> getPostWriteByMyself(int user_id, int page) {
+        return isQuery(user_id, page);
     }
 
     /**
+     *
+     * @param page int
+     * @return List<PostBean>
      * @author 黎江
+     */
+    public List<PostBean> getSquarePostList(int page){
+        return isQuery(page);
+    }
+
+    /**
      * @param page int
      * @return List|null
+     * @author 黎江
      */
-    public List<PostBean> isQuery(int page) {
+    private List<PostBean> isQuery(int page) {
+        return isQuery(-1, page);
+    }
+
+    private List<PostBean> isQuery(int user_id, int page) {
         try {
             page -= 1;
-            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE status=1 ORDER BY post_id DESC LIMIT " + (page*10) + ",10";
-            this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+            if (page < 0)
+                throw new SQLException("不是正确格式的页码");
+            if (user_id > 0) {
+                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 AND user_id=? ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+                this.preparedStatement.setInt(1, user_id);
+            } else {
+                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+            }
             this.resultSet = this.preparedStatement.executeQuery();
             if (!this.resultSet.next())
                 throw new SQLException("主贴列表查询错误");
             List<PostBean> posts = new ArrayList<PostBean>();
             this.resultSet.beforeFirst();
             while (this.resultSet.next()) {
-                PostBean pb = new PostBean();
-                int post_id = this.resultSet.getInt("post_id") > 0 ? this.resultSet.getInt("post_id") : 0;
-                pb.setPost_id(post_id);
-                int user_id = this.resultSet.getInt("user_id") > 0 ? this.resultSet.getInt("user_id") : 0;
-                pb.setUser_id(user_id);
-                String content = this.resultSet.getString("content") != null ? this.resultSet.getString("content") : "";
-                pb.setContent(content);
-                int like_count = this.resultSet.getInt("like_count");
-                pb.setLike_count(like_count);
-                String images_path = this.resultSet.getString("images_path");
-                pb.setImages_path(images_path);
-                long time = this.resultSet.getLong("time");
-                pb.setTime(time);
-                pb.setStatus(this.resultSet.getInt("status"));
+                PostBean pb = this.getSpecifyPost(this.resultSet.getInt("post_id"));
                 posts.add(pb);
             }
             return posts;
@@ -129,5 +131,97 @@ public class PostTableItem extends TableItem {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * @param post_id int
+     * @return PostBean|null
+     * @author 黎江
+     */
+    public PostBean getSpecifyPost(int post_id) {
+        try {
+            this.sql = "SELECT * FROM " + this.getTableName() + " WHERE post_id=?";
+            this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
+            this.preparedStatement.setInt(1,post_id);
+            this.resultSet = this.preparedStatement.executeQuery();
+            if (!this.resultSet.next())
+                throw new SQLException("查不到帖子！");
+            this.resultSet.beforeFirst();
+            PostBean callback = new PostBean();
+            while (this.resultSet.next()) {
+                callback.setPost_id(post_id);
+                int user_id = this.resultSet.getInt("user_id") > 0 ? this.resultSet.getInt("user_id") : 0;
+                callback.setUser_id(user_id);
+                String content = this.resultSet.getString("content") != null ? this.resultSet.getString("content") : "";
+                callback.setContent(content);
+                int like_count = this.resultSet.getInt("like_count");
+                callback.setLike_count(like_count);
+                String images_path = this.resultSet.getString("images_path");
+                callback.setImages_path(images_path);
+                long time = this.resultSet.getLong("time");
+                callback.setTime(time);
+                callback.setStatus(this.resultSet.getInt("status"));
+            }
+            return callback;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param post_id int
+     * @param user_id int
+     * @return boolean
+     * @author 黎江
+     */
+    private boolean isDelete(int post_id,int user_id){
+        try {
+            if (user_id > 0){
+                this.sql = "UPDATE "+this.getTableName()+" SET status=0 WHERE post_id=? AND user_id=?";
+                this.preparedStatement.setInt(1,post_id);
+                this.preparedStatement.setInt(2,user_id);
+            }else {
+                this.sql = "DELETE FROM "+this.getTableName()+" WHERE post_id=?";
+                this.preparedStatement.setInt(1,post_id);
+            }
+            this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
+            return this.preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param post_id int
+     * @return boolean
+     * @author 黎江
+     */
+    private boolean isDelete(int post_id){
+        return isDelete(post_id,-1);
+    }
+
+    /**
+     *
+     * @param post_id int
+     * @param user_id int
+     * @return boolean
+     * @author 黎江
+     */
+    public boolean deletePostByMyself(int post_id,int user_id){
+        return isDelete(post_id,user_id);
+    }
+
+    /**
+     *
+     * @param post_id int
+     * @return boolean
+     * @author 黎江
+     */
+    public boolean deletePost(int post_id){
+        return isDelete(post_id);
     }
 }

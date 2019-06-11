@@ -8,6 +8,7 @@ import global.config.DBConnecter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -28,11 +29,51 @@ public class UserRegisterTableItem extends TableItem {
         integerColumn.add("alter_time");
     }
 
-    public static boolean isIntegerColumn(String column_key){
+    private static boolean isIntegerColumn(String column_key) {
         return integerColumn.contains(column_key);
     }
 
-    public static UserBean refreshUserBean(int user_id){
+    public static int countUsers() {
+        try {
+            String sql = "SELECT COUNT(user_id) AS total FROM user_register WHERE status=1";
+            Statement statement = DBConnecter.connecter.getStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            int count = 0;
+            while (resultSet.next()) {
+                count = resultSet.getInt("total");
+            }
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public List<UserBean> getUsersList(int page) {
+        try {
+            page -= 1;
+            if (page < 0)
+                throw new SQLException("页码小于零，不是正确格式");
+            this.sql = "SELECT user_id FROM " + this.getTableName() + " WHERE status=1 ORDER BY user_id DESC LIMIT " + (page * 10) + ",10";
+            this.statement = this.dbConnecter.getStatement();
+            this.resultSet = this.statement.executeQuery(this.sql);
+            if (!resultSet.next())
+                throw new SQLException("已经查不到用户了");
+            this.resultSet.beforeFirst();
+            List<UserBean> callback = new ArrayList<UserBean>();
+            while (this.resultSet.next()) {
+                UserBean userBean = this.getUserBean(this.resultSet.getInt("user_id"));
+                callback.add(userBean);
+            }
+            System.out.println(callback);
+            return callback;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static UserBean refreshUserBean(int user_id) {
         try {
             String sql = "SELECT * FROM user_register WHERE user_id=?";
             PreparedStatement preparedStatement = DBConnecter.connecter.getPreparedStatement(sql);
@@ -62,11 +103,11 @@ public class UserRegisterTableItem extends TableItem {
     }
 
 
-    public static UserBean getUser(int user_id){
+    public static UserBean getUser(int user_id) {
         return refreshUserBean(user_id);
     }
 
-    public UserBean getUserBean(int user_id){
+    public UserBean getUserBean(int user_id) {
         return refreshUserBean(user_id);
     }
 
@@ -217,9 +258,8 @@ public class UserRegisterTableItem extends TableItem {
     }
 
     /**
-     *
      * @param user_id int
-     * @param keys HashMap<>
+     * @param keys    HashMap<>
      * @return boolean
      */
     public boolean alterInformation(int user_id, HashMap<String, String> keys) {
@@ -227,7 +267,7 @@ public class UserRegisterTableItem extends TableItem {
             this.sql = "UPDATE " + this.getTableName() + " SET ";
             for (Map.Entry<String, String> item :
                     keys.entrySet()) {
-                this.sql = this.sql  + item.getKey() + "=?,";
+                this.sql = this.sql + item.getKey() + "=?,";
             }
             this.sql += "alter_time=?";
             this.sql += " WHERE user_id=?";
@@ -237,13 +277,13 @@ public class UserRegisterTableItem extends TableItem {
             for (Map.Entry<String, String> item :
                     keys.entrySet()) {
                 if (isIntegerColumn(item.getKey()))
-                    this.preparedStatement.setInt(paramer_idx,Integer.parseInt(item.getValue()));
+                    this.preparedStatement.setInt(paramer_idx, Integer.parseInt(item.getValue()));
                 else
-                    this.preparedStatement.setString(paramer_idx,item.getValue());
+                    this.preparedStatement.setString(paramer_idx, item.getValue());
                 paramer_idx++;
             }
-            this.preparedStatement.setLong(paramer_idx,System.currentTimeMillis()/1000);
-            this.preparedStatement.setInt(paramer_idx+1,user_id);
+            this.preparedStatement.setLong(paramer_idx, System.currentTimeMillis() / 1000);
+            this.preparedStatement.setInt(paramer_idx + 1, user_id);
             return this.preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

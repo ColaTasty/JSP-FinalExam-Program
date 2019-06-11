@@ -1,8 +1,8 @@
 package servlet.square;
 
-import table.Post_ResponseTableItem;
 import global.ResponseToClient;
 import global.config.DBConnecter;
+import table.Post_ResponseTableItem;
 
 import java.io.IOException;
 import javax.servlet.http.*;
