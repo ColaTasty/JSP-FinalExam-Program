@@ -138,4 +138,13 @@
         <servlet-name>GetMyPostsServlet</servlet-name>
         <url-pattern>/get-my-posts</url-pattern>
     </servlet-mapping>
+    <!--  TestDBServlet  -->
+    <servlet>
+        <servlet-name>TestDBServlet</servlet-name>
+        <servlet-class>servlet.test.TestDBServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestDBServlet</servlet-name>
+        <url-pattern>/test-db</url-pattern>
+    </servlet-mapping>
 </web-app>

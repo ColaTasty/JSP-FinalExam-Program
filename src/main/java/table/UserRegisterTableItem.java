@@ -146,7 +146,7 @@ public class UserRegisterTableItem extends TableItem {
      * @param password String
      * @return boolean|null
      */
-    public boolean isVaildAccount(String account, String password) {
+    public boolean isValidAccount(String account, String password) {
         try {
             this.sql = "SELECT * FROM " + this.getTableName() + " WHERE account=? AND password=?";
             this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);

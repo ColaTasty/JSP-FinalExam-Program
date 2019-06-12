@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         UserRegisterTableItem urtitem = new UserRegisterTableItem(DBConnecter.connecter);
         ResponseToClient responseToClient = new ResponseToClient();
-        if (urtitem.isVaildAccount(accout,password)){
+        if (urtitem.isValidAccount(accout,password)){
             responseToClient.responseToClient(true,"登陆成功",response);
         }
         else {

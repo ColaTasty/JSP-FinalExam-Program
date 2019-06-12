@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PostListBean {
     private List<PostBean> posts;
-    private int page = 0;
+    private int page = 1;
     private int posts_total = 0;
 
     public List<PostBean> getPosts() {

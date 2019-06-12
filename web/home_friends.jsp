@@ -101,8 +101,8 @@
                                     }
                                     modal.find('#username').val(res.user_name);
                                     modal.find('#gender').val(res.gender);
-                                    modal.find('#phone').val(res.email);
-                                    modal.find('#email').val(res.mobile);
+                                    modal.find('#phone').val(res.mobile);
+                                    modal.find('#email').val(res.email);
                                 },
                                 error: function () {
                                     alert("查询失败！请检查网络连接！");

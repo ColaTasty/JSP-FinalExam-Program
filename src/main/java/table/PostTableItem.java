@@ -23,7 +23,7 @@ import java.util.List;
 public class PostTableItem extends TableItem {
 
     public PostTableItem(DBConnecter dbConnecter) {
-        super("posts");
+        super("post_enroll");
         this.dbConnecter = dbConnecter;
     }
 
@@ -31,11 +31,11 @@ public class PostTableItem extends TableItem {
         return countMyPosts(-1);
     }
 
-    public static int countMyPosts(int user_id){
+    public static int countMyPosts(int user_id) {
         try {
             String sql;
             if (user_id > 0)
-                sql = "SELECT COUNT(post_id) AS total FROM posts WHERE user_id="+user_id;
+                sql = "SELECT COUNT(post_id) AS total FROM posts WHERE user_id=" + user_id;
             else
                 sql = "SELECT COUNT(post_id) AS total FROM posts WHERE status=1";
             Statement statement = DBConnecter.connecter.getStatement();
@@ -52,63 +52,102 @@ public class PostTableItem extends TableItem {
     }
 
     /**
-     *
      * @param user_id int
-     * @param page int
+     * @param page    int
      * @return List<PostBean>
      * @author 黎江
      */
     public List<PostBean> getPostWriteByMyself(int user_id, int page) {
-        return isQuery(user_id, page);
+        return queryList(user_id, page);
     }
 
     /**
-     *
      * @param page int
      * @return List<PostBean>
      * @author 黎江
      */
-    public List<PostBean> getSquarePostList(int page){
-        return isQuery(page);
+    public List<PostBean> getSquarePostList(int page) {
+        return queryList(-1,page);
     }
 
-    /**
-     * @param page int
-     * @return List|null
-     * @author 黎江
-     */
-    private List<PostBean> isQuery(int page) {
-        return isQuery(-1, page);
-    }
 
-    private List<PostBean> isQuery(int user_id, int page) {
+    private static List<PostBean> queryList(int user_id,int page){
         try {
             page -= 1;
             if (page < 0)
                 throw new SQLException("不是正确格式的页码");
-            if (user_id > 0) {
-                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 AND user_id=? ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
-                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
-                this.preparedStatement.setInt(1, user_id);
-            } else {
-                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
-                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
-            }
-            this.resultSet = this.preparedStatement.executeQuery();
-            if (!this.resultSet.next())
+            Statement statement = DBConnecter.connecter.getStatement();
+            String sql = "SELECT * FROM posts";
+            System.out.println(DBConnecter.connecter.getConnectionString());
+            System.out.println(DBConnecter.connecter.getConn().isClosed());
+//            if (user_id > 0) {
+//                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 AND user_id=? ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+//                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+//                this.preparedStatement.setInt(1, user_id);
+//                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 AND user_id=" + user_id + " ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+//            } else {
+//                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+//                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+//            }
+            System.out.println("SQL : " + sql);
+//            this.resultSet = this.preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery(sql);
+            System.out.println("rowCount : " + resultSet.getRow());
+            if (resultSet.getRow() <= 0)
                 throw new SQLException("主贴列表查询错误");
             List<PostBean> posts = new ArrayList<PostBean>();
-            this.resultSet.beforeFirst();
-            while (this.resultSet.next()) {
-                PostBean pb = this.getSpecifyPost(this.resultSet.getInt("post_id"));
+            resultSet.beforeFirst();
+            int count = 0;
+            PostTableItem postTableItem = new PostTableItem(DBConnecter.connecter);
+            while (resultSet.next()) {
+                count++;
+                PostBean pb = postTableItem.getSpecifyPost(resultSet.getInt("post_id"));
                 posts.add(pb);
             }
+            System.out.println(count);
             return posts;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
+//    private List<PostBean> qList(int user_id, int page) {
+//        try {
+//            page -= 1;
+//            if (page < 0)
+//                throw new SQLException("不是正确格式的页码");
+//            this.statement = this.dbConnecter.getStatement();
+//            this.sql = "SELECT * FROM jsp_datingcommunity.posts;";
+////            if (user_id > 0) {
+////                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 AND user_id=? ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+////                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+////                this.preparedStatement.setInt(1, user_id);
+////                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 AND user_id=" + user_id + " ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+////            } else {
+////                this.sql = "SELECT post_id FROM " + this.getTableName() + " WHERE status=1 ORDER BY post_id DESC LIMIT " + (page * 10) + ",10";
+////                this.preparedStatement = this.getDbConnecter().getPreparedStatement(this.sql);
+////            }
+//            System.out.println("SQL : " + this.sql);
+////            this.resultSet = this.preparedStatement.executeQuery();
+//            this.resultSet = this.statement.executeQuery(this.sql);
+//            System.out.println("rowCount : " + this.resultSet.getRow());
+//            if (this.resultSet.getRow() <= 0)
+//                throw new SQLException("主贴列表查询错误");
+//            List<PostBean> posts = new ArrayList<PostBean>();
+//            this.resultSet.beforeFirst();
+//            int count = 0;
+//            while (this.resultSet.next()) {
+//                count++;
+//                PostBean pb = this.getSpecifyPost(this.resultSet.getInt("post_id"));
+//                posts.add(pb);
+//            }
+//            System.out.println(count);
+//            return posts;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     /**
      * @param uid     int
@@ -142,7 +181,7 @@ public class PostTableItem extends TableItem {
         try {
             this.sql = "SELECT * FROM " + this.getTableName() + " WHERE post_id=?";
             this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
-            this.preparedStatement.setInt(1,post_id);
+            this.preparedStatement.setInt(1, post_id);
             this.resultSet = this.preparedStatement.executeQuery();
             if (!this.resultSet.next())
                 throw new SQLException("查不到帖子！");
@@ -162,6 +201,7 @@ public class PostTableItem extends TableItem {
                 callback.setTime(time);
                 callback.setStatus(this.resultSet.getInt("status"));
             }
+            System.out.println(callback);
             return callback;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -170,21 +210,20 @@ public class PostTableItem extends TableItem {
     }
 
     /**
-     *
      * @param post_id int
      * @param user_id int
      * @return boolean
      * @author 黎江
      */
-    private boolean isDelete(int post_id,int user_id){
+    private boolean isDelete(int post_id, int user_id) {
         try {
-            if (user_id > 0){
-                this.sql = "UPDATE "+this.getTableName()+" SET status=0 WHERE post_id=? AND user_id=?";
-                this.preparedStatement.setInt(1,post_id);
-                this.preparedStatement.setInt(2,user_id);
-            }else {
-                this.sql = "DELETE FROM "+this.getTableName()+" WHERE post_id=?";
-                this.preparedStatement.setInt(1,post_id);
+            if (user_id > 0) {
+                this.sql = "UPDATE " + this.getTableName() + " SET status=0 WHERE post_id=? AND user_id=?";
+                this.preparedStatement.setInt(1, post_id);
+                this.preparedStatement.setInt(2, user_id);
+            } else {
+                this.sql = "DELETE FROM " + this.getTableName() + " WHERE post_id=?";
+                this.preparedStatement.setInt(1, post_id);
             }
             this.preparedStatement = this.dbConnecter.getPreparedStatement(this.sql);
             return this.preparedStatement.executeUpdate() > 0;
@@ -195,33 +234,30 @@ public class PostTableItem extends TableItem {
     }
 
     /**
-     *
      * @param post_id int
      * @return boolean
      * @author 黎江
      */
-    private boolean isDelete(int post_id){
-        return isDelete(post_id,-1);
+    private boolean isDelete(int post_id) {
+        return isDelete(post_id, -1);
     }
 
     /**
-     *
      * @param post_id int
      * @param user_id int
      * @return boolean
      * @author 黎江
      */
-    public boolean deletePostByMyself(int post_id,int user_id){
-        return isDelete(post_id,user_id);
+    public boolean deletePostByMyself(int post_id, int user_id) {
+        return isDelete(post_id, user_id);
     }
 
     /**
-     *
      * @param post_id int
      * @return boolean
      * @author 黎江
      */
-    public boolean deletePost(int post_id){
+    public boolean deletePost(int post_id) {
         return isDelete(post_id);
     }
 }

@@ -2,10 +2,6 @@ package servlet.square;
 
 import bean.PostBean;
 import bean.PostListBean;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import global.TransJson;
 import table.PostTableItem;
 import global.ResponseToClient;
 import global.config.DBConnecter;
@@ -28,15 +24,18 @@ public class QuerySquareServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("content-type", "application/json;charset=utf-8");
         PostTableItem ptitem = new PostTableItem(DBConnecter.connecter);            //实例化，调用操作post表方法
-        int page = Integer.parseInt(request.getParameter("page"));
+        String str_page = request.getParameter("page");
 //        没有页码，返回错误
-        if (page <= 0) {
+        if (str_page == null) {
+            System.out.println("page : " + str_page);
             ResponseToClient.illegalVisit(response);
             return;
         }
+        int page = Integer.parseInt(str_page);
         List<PostBean> posts = ptitem.getSquarePostList(page);
 //        查询失败，返回错误
         if (posts == null && PostTableItem.countPosts() > 0) {
+            System.out.println("posts_count : error");
             ResponseToClient.illegalVisit(response);
             return;
         }

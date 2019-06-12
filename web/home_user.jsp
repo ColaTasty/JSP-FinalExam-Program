@@ -159,11 +159,15 @@
                         <!-- 内容 -->
                         <!-- start -->
                         <!-- 我的帖子，JS备份 -->
-                        <!--<script>
+                        <script>
                             $(function () {
                                 var ajax_error = function () {
                                     alert("请求失败，请检查网络");
                                 };
+                                /**
+                                 *
+                                 *
+                                 */
                                 var getTotalPage = function (postTotal) {
                                     var tmp = postTotal % 10;
                                     var pagetotal;
@@ -174,12 +178,11 @@
                                     }
                                     return pagetotal;
                                 };
-                                var myPostsPage = 1;
-                                var myPostsList = undefined;
                                 /**
                                  *
                                  * @param data = {page}
                                  * @param success = Function
+                                 * @tip 获取我的帖子列表
                                  */
                                 var getMyPostsList = function (data, success) {
                                     $.ajax({
@@ -200,24 +203,24 @@
                                  * @param page = number
                                  */
                                 var setMyPostsNavBar = function (pageTotal, page) {
-                                    var nav = $("#my-posts-nav");
+                                    var nav = $("#my-posts-nav-box");
                                     nav.empty();
                                     var getInit_ul = function () {
-                                        var ul = $("ul");
+                                        var ul = $("<ul>");
                                         ul.addClass("pagination");
                                         return ul;
                                     };
                                     var getInit_a = function () {
-                                        var a = $("a");
+                                        var a = $("<a>");
                                         a.attr("href", "javascript:void(0)");
                                         a.attr("aria-label", "Previous");
                                         return a;
                                     };
                                     var getInit_li = function () {
-                                        return $("li");
+                                        return $("<li>");
                                     };
                                     var getInit_span = function () {
-                                        var span = $("span");
+                                        var span = $("<span>");
                                         span.attr("aria-hidden", "true");
                                         return span;
                                     };
@@ -232,43 +235,79 @@
                                         last_a.attr("page", page - 1);
                                         last_li.append(last_a);
                                         ul.append(last_li);
+                                    }else {
+                                        var pageIdx = 1;
+                                        while (pageIdx <= pageTotal) {
+                                            console.log(pageIdx);
+                                            var m_li = getInit_li();
+                                            var m_a = getInit_a();
+                                            var m_span = getInit_span();
+                                            m_span.text(pageIdx);
+                                            m_a.append(m_span);
+                                            m_a.attr("onclick","myPostsPageOnClick(this)");
+                                            m_a.attr("page",pageIdx);
+                                            if (pageIdx === page)
+                                                m_a.attr("style","background-color:#ccc");
+                                            m_li.append(m_a);
+                                            ul.append(m_li);
+                                            pageIdx++;
+                                        }
+                                        if (page < pageTotal) {
+                                            var next_li = getInit_li();
+                                            var next_a = getInit_a();
+                                            var next_span = getInit_span();
+                                            next_span.text("&raquo;");
+                                            next_a.append(next_span);
+                                            next_a.attr("id", "next-my-posts-page");
+                                            next_a.attr("page", page - 1);
+                                            next_li.append(next_a);
+                                            ul.append(next_li);
+                                            nav.append(ul);
+                                        }else {
+                                            nav.append(ul);
+                                        }
                                     }
-                                    var pageIdx = 0;
-                                    while (pageIdx <= pageTotal) {
-                                        var m_li = getInit_li();
-                                        var m_a = getInit_a();
-                                        var m_span = getInit_span();
-                                        m_span.text(pageIdx);
-                                        m_a.append(m_span);
-                                        m_a.attr("onclick","myPostsPageOnClick(this)");
-                                        m_a.attr("page",pageIdx++);
-                                        if (pageIdx === page)
-                                            m_a.attr("style","background-color:#ccc");
-                                        m_li.append(m_a);
-                                        ul.append(m_li);
-                                    }
-                                    if (page < pageTotal) {
-                                        var next_li = getInit_li();
-                                        var next_a = getInit_a();
-                                        var next_span = getInit_span();
-                                        next_span.text("&raquo;");
-                                        next_a.append(next_span);
-                                        next_a.attr("id", "next-my-posts-page");
-                                        next_a.attr("page", page - 1);
-                                        next_li.append(next_a);
-                                        ul.append(next_li);
-                                    }
-                                    nav.append(ul);
                                 };
-                                getMyPostsList({page:myPostsPage},function (res) {
-                                    var posts = res.posts;
-                                    setMyPostsNavBar(getTotalPage(posts.posts_total),posts.page);
+                                var refreshMyPosts = function(posts){
+                                    var getInit_div = function () {
+                                        return  $("<div>");
+                                    };
+                                    var getInit_img = function () {
+                                        var img = $("<img>");
+                                        img.addClass("iv_article");
+                                        img.addClass("img-rounded");
+                                        return img;
+                                    };
+                                    posts.forEach(function () {
+
+                                    });
+                                    var div_id = getInit_div();
+                                    div_id.attr("id","my-post-list-item");
+                                    div_id.addClass("list-group-item");
+                                    div_id.addClass("item_article");
+                                    var div_row = getInit_div();
+                                    div_row.addClass("row");
+                                    var div_text = getInit_div();
+                                    div_text.addClass("div_center");
+                                    div_text.addClass("col-xs-9");
+                                    var div_pic = getInit_div();
+                                    div_pic.addClass("col-xs-3");
+                                    div_pic.addClass("div_right_info");
+                                    var img = getInit_img();
+                                };
+                                var removeMyPostsItem = function(){
+                                    $("#my-post-list-item").remove();
+                                };
+                                getMyPostsList({page:1},function (res) {
+                                    var list = JSON.parse(res.posts);
+                                    console.log(list);
+                                    setMyPostsNavBar(getTotalPage(list.posts_total),list.page);
                                 });
-                                $("#post").find(".list-group-item").remove();
+                                removeMyPostsItem();
                             })
-                        </script>-->
+                        </script>
                         <!-- 我的帖子，JS备份 end -->
-                        <div class="list-group-item item_article">
+                        <div id="my-post-list-item" class="list-group-item item_article">
                             <div class="row">
                                 <div class="div_center col-xs-9">
                                     <p class="list-group-item-text div_article_content">
@@ -282,48 +321,12 @@
                                 </div>
                                 <!-- 右侧图片，信息 -->
                                 <div class="col-xs-3 div_right_info">
-                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item item_article">
-                            <div class="row">
-                                <div class="div_center col-xs-9">
-                                    <p class="list-group-item-text div_article_content">
-                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                                    </p>
-                                    <p class="list-group-item-text div_article">
-                                        2019/06/05
-                                    </p>
-                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">删除
-                                    </button>
-                                </div>
-                                <!-- 右侧图片，信息 -->
-                                <div class="col-xs-3 div_right_info">
-                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item item_article">
-                            <div class="row">
-                                <div class="div_center col-xs-9">
-                                    <p class="list-group-item-text div_article_content">
-                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                                    </p>
-                                    <p class="list-group-item-text div_article">
-                                        2019/06/05
-                                    </p>
-                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">删除
-                                    </button>
-                                </div>
-                                <!-- 右侧图片，信息 -->
-                                <div class="col-xs-3 div_right_info">
-                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
+                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt=""/>
                                 </div>
                             </div>
                         </div>
                         <!-- 导航条 -->
-                        <nav id="my-posts-nav" aria-label="Page navigation" style="text-align: center">
+                        <nav id="my-posts-nav-box" aria-label="Page navigation" style="text-align: center">
                             <ul class="pagination">
                                 <!-- 上一页 -->
                                 <li>
@@ -367,44 +370,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group-item item_article">
-                            <div class="row">
-                                <div class="div_center col-xs-9">
-                                    <p class="list-group-item-text div_article_content">
-                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                                    </p>
-                                    <p class="list-group-item-text div_article">
-                                        2019/06/05
-                                    </p>
-                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">
-                                        取消收藏
-                                    </button>
-                                </div>
-                                <!-- 右侧图片，信息 -->
-                                <div class="col-xs-3 div_right_info">
-                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item item_article">
-                            <div class="row">
-                                <div class="div_center col-xs-9">
-                                    <p class="list-group-item-text div_article_content">
-                                        今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么今晚吃什么
-                                    </p>
-                                    <p class="list-group-item-text div_article">
-                                        2019/06/05
-                                    </p>
-                                    <button type="button" class="btn btn-danger btn-default" style="float: right;">
-                                        取消收藏
-                                    </button>
-                                </div>
-                                <!-- 右侧图片，信息 -->
-                                <div class="col-xs-3 div_right_info">
-                                    <img class="iv_article img-rounded" src="/src/img/user.ico" alt="">
-                                </div>
-                            </div>
-                        </div>
                         <!-- 导航条 -->
                         <nav aria-label="Page navigation" style="text-align: center">
                             <ul class="pagination">
@@ -428,7 +393,6 @@
                         </nav>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
