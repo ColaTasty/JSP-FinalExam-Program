@@ -52,7 +52,7 @@
             <div class="form-group">
                 <div class="col-xs-10 col-sm-8 col-md-4 col-lg-2 col-xs-offset-1 col-sm-offset-2 col-md-offset-4 col-lg-offset-5">
                     <input type="text" name="mobile" id="mobile" class="form-control input-lg" required
-                           placeholder="手机号">
+                           placeholder="手机号" maxlength="11" pattern="[0-9]{10}">
                     <label class="error-msg" id="error-msg-phonenum"></label>
                 </div>
             </div>

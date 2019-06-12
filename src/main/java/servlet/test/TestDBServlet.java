@@ -16,7 +16,6 @@ import java.io.PrintWriter;
 import java.sql.*;
 import java.util.Map;
 
-import com.mysql.cj.jdbc.*;
 
 /**
  * @author 黎江
@@ -37,10 +36,10 @@ public class TestDBServlet extends HttpServlet {
             Connection connection;
             Statement statement;
             ResultSet resultSet;
-            String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
+            String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC";
             String user = "root";
             String password = "mysqlmm233";
-            Class.forName("com.mysql.cj.jdbc");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, password);
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM test_table");
