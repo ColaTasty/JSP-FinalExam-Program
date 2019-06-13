@@ -9,6 +9,9 @@ package bean;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * @author 洪颖森、郑枫超
+ */
 public class PostBean {
     private int response_id;
     private int post_id;

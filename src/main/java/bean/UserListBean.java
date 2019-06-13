@@ -8,6 +8,9 @@ package bean;
 
 import java.util.List;
 
+/**
+ * @author 吴裕彬、尹颂涛
+ */
 public class UserListBean {
     private int user_count = 0;
     private List<UserBean> usersBean;

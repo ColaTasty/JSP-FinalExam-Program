@@ -9,6 +9,9 @@ package bean;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 洪颖森、郑枫超
+ */
 public class PostListBean {
     private List<PostBean> posts;
     private int page = 1;

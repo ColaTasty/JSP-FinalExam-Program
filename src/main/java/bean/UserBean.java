@@ -7,7 +7,7 @@
 package bean;
 
 /**
- * @author 黎江
+ * @author 吴裕彬、尹颂涛
  */
 public class UserBean {
     private int user_id = -1;

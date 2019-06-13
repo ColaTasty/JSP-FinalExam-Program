@@ -1,7 +1,7 @@
 package bean;
 
 /**
- * @author 黎江
+ * @author 黎江、吴裕彬、尹颂涛
  */
 public class AccountBean {
     private String account;
